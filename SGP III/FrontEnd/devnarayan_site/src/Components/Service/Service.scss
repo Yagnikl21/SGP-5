@@ -1,0 +1,21 @@
+.service{
+    background-color: #f3f6ff;
+    .side_arrow{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap : 15px;
+    
+        .single_arrow{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color : var(--primary);
+            border-radius: 50%;
+            width : 60px;
+            height: 50px;
+            font-size: 32px;
+        }
+    }
+}
