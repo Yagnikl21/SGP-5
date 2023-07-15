@@ -8,7 +8,7 @@ export default function Carousel() {
 
     return (
         <div>
-            <div className="container-fluid p-0 mb-5 pb-5">
+            <div className="container-fluid p-0 pb-5 carousel">
                 <div id="header-carousel" className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner">
                         <div className="carousel-item w-100 active">
