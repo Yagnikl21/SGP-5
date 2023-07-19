@@ -3,6 +3,7 @@ import './Home.scss'
 import Navbar from '../../Components/Navbar/Navbar'
 import Carousel from '../../Components/Carousel/Carousel'
 import Service from '../../Components/Service/Service'
+import Product from '../../Components/Product/Product'
 
 export default function Home() {
   return (
@@ -54,6 +55,7 @@ export default function Home() {
         <Navbar />
         <Carousel />
         <Service />
+        <Product />
     </div>
   )
 }
