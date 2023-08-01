@@ -1,22 +1,40 @@
 import './product.scss'
 import img from '../../assets/Images/product-1.jpg'
-import { useRef, useState } from 'react'
+import { useRef, useState ,useEffect} from 'react'
+import axios from 'axios';
 
 export default function Product() {
 
-    const product = [
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' }
-    ]
+    // const product = [
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' }
+    // ]
 
+    const [product, setProduct] = useState([]);
+    useEffect(() => {
+        const fechData = async () => {
+            try {
+                const res = await axios.get("http://localhost:8080/icecream/allice");
+                console.log(res);
+                setProduct(res.data);
+                console.log(res.data);
+                
+            } catch (err) {
+                console.log('Error to fech Data');
+                console.log(err);
+            }
+        }
+
+        fechData();
+    }, [])
     var count = 0;
     const ShowProduct = product.map((p) => {
         count++;
@@ -30,7 +48,7 @@ export default function Product() {
                     <div className="position-relative rounded-circle mt-n3 mb-4 p-3 image" style={{ width: "150px", height: "150px" }}>
                         <img className="rounded-circle w-100 h-100" src={img} style={{ objectFit: "cover" }} alt='ImageOfIceCream' />
                     </div>
-                    <h5 className="font-weight-bold mb-4">{p.title}</h5>
+                    <h5 className="font-weight-bold mb-4">{p.name}</h5>
                     <a href="" className="btn btn-sm btn-secondary">Order Now</a>
                 </div>
             </div>
@@ -66,30 +84,30 @@ export default function Product() {
     //     const newPosition = container.scrollLeft - cardWidth;
     //     container.scrollBy({ left: newPosition, behavior: 'smooth' });
     // };
-    
+
     // const scrollRight = () => {
     //     const container = document.querySelector('.product-carousel');
     //     const cardWidth = container.querySelector('.product-item').clientWidth;
     //     const containerWidth = container.clientWidth;
     //     const maxScrollPosition = container.scrollWidth - containerWidth;
-        
+
     //     // Calculate the number of cards in one row
     //     const cardsInRow = Math.floor(containerWidth / cardWidth);
-        
+
     //     // Calculate the scroll distance to show the next card
     //     const scrollDistance = cardWidth * (cardsInRow - 1);
-        
+
     //     // Calculate the new scroll position
     //     const newPosition = scrollPosition + scrollDistance;
-        
+
     //     // Limit the newPosition to the maximum scroll position
     //     const clampedPosition = Math.min(newPosition, maxScrollPosition);
-        
+
     //     setScrollPosition(clampedPosition);
     //     container.scrollBy({ left: scrollDistance, behavior: 'smooth' });
     //   };
-      
-      
+
+
 
     return (
         <div className="container-fluid py-5 product bg-light">

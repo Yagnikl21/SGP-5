@@ -4,6 +4,7 @@ const express=require("express")
 require("dotenv").config();
 const mongoose=require("mongoose")
 const app=express()
+const cors = require("cors");
 const multer = require("multer");
 const icecreamroute=require("./routes/icecream")
 const userroute=require("./routes/user")
@@ -18,6 +19,13 @@ mongoose
     console.log("Connected to MongoDB , ", responce.connection.name);
   })
   .catch((err) => console.log(err));
+  app.use(
+    cors({
+      // origin: "http://localhost:3000"
+      // methods: "GET,POST,PUT,DELETE",
+    })
+  );
+  
   app.use("/",userroute);
   app.use("/icecream/",icecreamroute)
 const port = process.env.PORT || 8080;
