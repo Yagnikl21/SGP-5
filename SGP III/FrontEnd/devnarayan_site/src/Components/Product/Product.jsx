@@ -1,21 +1,39 @@
 import './product.scss'
 import img from '../../assets/Images/product-1.jpg'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import axios from 'axios'
 
 export default function Product() {
 
-    const product = [
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' },
-        { title: 'Vanila Ice Cream' },
-        { title: 'Choclate Ice cream' }
-    ]
+    // const product = [
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' },
+    //     { title: 'Vanila Ice Cream' },
+    //     { title: 'Choclate Ice cream' }
+    // ]
+
+    const [product, setProduct] = useState([]);
+    useEffect(()=>{
+        const fechData = async () => {
+            try{
+                const res = await axios.get("http://localhost:8080/icecream/allice");
+                // console.log(res);
+                setProduct(res.data);
+                console.log(product);
+            }catch (err){
+                console.log('Error to fech Data');
+                console.log(err);
+            }
+        }
+
+        fechData();
+    },[])
 
     var count = 0;
     const ShowProduct = product.map((p) => {

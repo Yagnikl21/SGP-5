@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './Style.css';
+import './Login.scss';
 import Img from '../Login/logo.png';
 
 // import Signup from '../Index/Signup';
@@ -7,7 +7,7 @@ import Img from '../Login/logo.png';
 export default function Index() {
     return (
         <>
-            <div className="login-card-container">
+            <div className="login-card-container login-card-body">
                 <div className="login-card">
                     <div className="login-card-logo">
                         <img src={Img} alt="logo" />

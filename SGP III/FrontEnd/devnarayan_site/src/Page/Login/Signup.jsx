@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import './Style.css';
+import './Login.scss';
 import Img from '../Login/logo.png';
+import { Link } from 'react-router-dom';
 // import Signup from './Index';
 
 export default function Signup() {
     return (
         <>
-            <div className="login-card-container">
+            <div className="login-card-container login-card-body">
                 <div className="login-card">
                     <div className="login-card-logo">
                         <img src={Img} alt="logo" />
@@ -74,7 +75,7 @@ export default function Signup() {
                         <button type="submit">Sign Up</button>
                     </form>
                     <div className="login-card-footer">
-                        Don't have an account? <a href="/Login">Already account.</a>
+                        Already have an account <Link to='/login'>Sign In</Link>
                     </div>
                 </div>
             </div>

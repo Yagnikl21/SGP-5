@@ -2,7 +2,7 @@
 
 /* @import url('https://fonts.googleapis.scom/css2?family=Poppins:wght@400;600&display=swap'); */
 
-body {
+.login-card-body {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     background: linear-gradient(to right, #62C3E7,
