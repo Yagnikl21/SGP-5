@@ -7,6 +7,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // app.use(express.json());
 // const port = process.env.PORT || 8080
+
+
 router.post("/signup", async(req,res)=>{
     try{
         const newUser = new User(req.body)

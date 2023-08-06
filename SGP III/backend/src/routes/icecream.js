@@ -1,8 +1,8 @@
-const express=require("express")
-const router=express.Router();
+const express = require("express")
+const router = express.Router();
 const multer = require("multer");
 const storage = multer.memoryStorage();
-const Icecream=require("../models/icecream")
+const Icecream = require("../models/icecream")
 const upload = multer({ storage: storage });
 
 //create ice cream
@@ -44,7 +44,9 @@ router.post("/cice", upload.single("image"), async (req, res) => {
 
 router.get("/allice", async (req, res) => {
   try {
+    // console.log("log1");
     const allIceCreams = await Icecream.find();
+    // console.log("log2");
     const modifiedIceCreams = allIceCreams.map((ice) => ({
       _id: ice._id,
       name: ice.name,
@@ -82,6 +84,27 @@ router.get("/ice/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to retrieve ice cream" });
+  }
+});
+
+// Filter by type of ice-cream 
+
+router.get("/ice", async (req, res) => {
+  try {
+    const type = req.query.type;
+
+    // Find the ice cream by ID
+    const iceCream = await Icecream.find({type});
+
+    // Check if the ice cream exists
+    if (!iceCream) {
+      return res.status(404).json({ error: "Ice cream not found" });
+    }
+
+    res.status(200).json(iceCream);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Failed to retrieve ice cream hello" });
   }
 });
 
@@ -147,5 +170,5 @@ router.delete("/dice/:id", async (req, res) => {
 });
 
 
-  
-  module.exports = router;
+
+module.exports = router;
