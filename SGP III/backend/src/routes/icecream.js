@@ -44,9 +44,9 @@ router.post("/cice", upload.single("image"), async (req, res) => {
 
 router.get("/allice", async (req, res) => {
   try {
-    console.log("log1");
+    // console.log("log1");
     const allIceCreams = await Icecream.find();
-    console.log("log2");
+    // console.log("log2");
     const modifiedIceCreams = allIceCreams.map((ice) => ({
       _id: ice._id,
       name: ice.name,
