@@ -1,14 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.scss';
 import Img from '../Login/logo.png';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../feature/User/userSlice';
 // import Signup from '../Index/Signup';
 
 export default function Login() {
+
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+
+    const { loading, error } = useSelector((state) => state.user);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    async function login(e) {
+        e.preventDefault();
+        // setemail("");
+        // setpassword("");
+        // const item = { email, password };
+        // console.log(item);
+        // let result = await fetch("http://localhost:8080/login", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Accept: "application/json",
+        //     },
+        //     body: JSON.stringify(item),
+        // });
+        // result = await result.json();
+        // console.log(result);
+
+        let userCredentials = {
+            email,
+            password
+        }
+
+        dispatch(loginUser(userCredentials)).then((result) => {
+            if (result.payload) {
+                setemail('');
+                setpassword('');
+                navigate('/');
+            }
+        })
+    }
+
     return (
         <>
-
 
             <div className="login-card-container login-card-body">
                 <div className="login-card">
