@@ -1,7 +1,8 @@
 .navbar_con {
     position: absolute !important;
-    top : 70px;
+    top: 70px;
     z-index: 5;
+
     .navbar {
         padding: 0 30px !important;
         border-radius: 60px;
@@ -22,10 +23,13 @@
                 color: var(--secondary) !important;
             }
         }
+
     }
-    .navlist{
+
+    .navlist {
         padding: 10px 30px;
-        a{
+
+        a {
             margin-bottom: 15px;
             font-weight: 600;
         }
@@ -34,14 +38,22 @@
 
 @media (max-width: 992px) {
     .navbar_con {
-        position:static !important;
+        position: static !important;
+
         .navbar {
             border-radius: 0;
             box-shadow: none !important;
+
             .navbar-nav {
                 gap: 0px !important;
             }
-    
+
         }
     }
+}
+
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+    color: #F195B2;
 }

@@ -11,13 +11,13 @@ export default function Signup() {
 
             <div className="login-card-container login-card-body">
                 <div className="login-card">
-                    {/* <div className="login-card-logo">
+                    <div className="login-card-logo">
                         <img src={Img} alt="logo" />
                     </div>
                     <div className="login-card-header">
                         <h1>Sign Up</h1>
                         <div>Please login to use the platform</div>
-                    </div> */}
+                    </div>
 
                     <form className="login-card-form">
 

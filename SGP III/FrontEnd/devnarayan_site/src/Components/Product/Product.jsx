@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 
 export default function Product() {
 
-    
+
 
     const URL = "http://localhost:8080/icecream/allice";
 
@@ -30,7 +30,7 @@ export default function Product() {
 
     const ShowProduct = product.map((p) => {
         return (
-            <ProductCard data={p}/>
+            <ProductCard data={p} />
         )
     })
 
@@ -89,24 +89,26 @@ export default function Product() {
 
 
     return (
-        <div className="container-fluid py-5 product ">
-            <div className="container py-5">
-                <div className="row">
-                    <div className="col-lg-6">
-                        <h1 className="section-title position-relative mb-5">Best Prices We Offer For Ice Cream Lovers</h1>
-                    </div>
-                    <div className="col-lg-6 mb-5 mb-lg-0 pb-5 pb-lg-0 side_arrow">
-                        <i className="fa-solid single_arrow fa-angle-left fa-xl" onClick={scrollLeft}></i>
-                        <i className="fa-solid single_arrow fa-angle-right fa-xl" onClick={scrollRight}></i>
+        <div className='prodect-all'>
+            <div className="container-fluid py-5 product ">
+                <div className="container py-5">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <h1 className="section-title position-relative mb-5">Best Prices We Offer For Ice Cream Lovers</h1>
+                        </div>
+                        <div className="col-lg-6 mb-5 mb-lg-0 pb-5 pb-lg-0 side_arrow">
+                            <i className="fa-solid single_arrow fa-angle-left fa-xl" onClick={scrollLeft}></i>
+                            <i className="fa-solid single_arrow fa-angle-right fa-xl" onClick={scrollRight}></i>
 
+                        </div>
                     </div>
-                </div>
-                <div className="row" >
-                    <div className="col-12 ">
-                        <div className="row owl-carousel product-carousel" ref={containerRef}>
-                            {
-                                ShowProduct
-                            }
+                    <div className="row" >
+                        <div className="col-12 ">
+                            <div className="row owl-carousel product-carousel" ref={containerRef}>
+                                {
+                                    ShowProduct
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
