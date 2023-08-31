@@ -34,6 +34,6 @@ export const signupFormSchema = Yup.object({
         .required('Please confirm your password'),
         
     mobile_number : Yup.string()
-        .matches(/^\+91[6-9]\d{9}$/, 'Invalid phone number')
+        .matches(/^[6-9]\d{9}$/, 'Invalid phone number')
         .required('Phone number is required')
 });

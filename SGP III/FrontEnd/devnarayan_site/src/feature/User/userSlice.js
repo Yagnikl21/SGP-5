@@ -9,11 +9,14 @@ export const loginUser = createAsyncThunk('user/loginUser',
         return response;
     }
 )
+
+const localUser = JSON.parse(localStorage.getItem('user'));
+console.log(localUser , "LocalUser is OK");
 const userSlice = createSlice({
     name:'user',
     initialState:{
         loading:false,
-        user:null,
+        user:localUser.users,
         error:null
 
     },

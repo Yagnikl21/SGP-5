@@ -1,39 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const signupUser = createAsyncThunk('signup/signupUser',
-    async(usersCredential)=>{
-        const request = await axios.post('http://localhost:8080/signup',usersCredential);
+export const userCart = createAsyncThunk('cart/userCart',
+    async(userID)=>{
+        const request = await axios.post('http://localhost:8080/cart',userID);
         const response = await request.data;   
         console.log(response);    
-        localStorage.setItem('user',JSON.stringify(response));
         return response;
     }
 )
 
-const userSlice = createSlice({
-    name:'signup',
+const cartSlice = createSlice({
+    name:'cart',
     initialState:{
         loading:false,
-        user:null,
+        cartData:null,
         error:null
-
     },
     extraReducers:(builder)=>{
         builder
-        .addCase(signupUser.pending,(state)=>{
+        .addCase(userCart.pending,(state)=>{
             state.loading = true;
-            state.user=null;
+            state.cartData=null;
             state.error=null;
         })
-        .addCase(signupUser.fulfilled,(state,action)=>{
+        .addCase(userCart.fulfilled,(state,action)=>{
             state.loading = false;
-            state.user = action.payload;
+            state.cartData = action.payload;
             state.error = null;
         })
-        .addCase(signupUser.rejected , (state,action)=>{
+        .addCase(userCart.rejected , (state,action)=>{
             state.loading = false;
-            state.user = null;
+            state.cartData = null;
             console.log(action.error.message);
             if(action.error.message === 'Request failed with status code 401'){
                 state.error = 'Access Denied!';
@@ -45,4 +43,4 @@ const userSlice = createSlice({
     }
 })
 
-export default userSlice.reducer;
+export default cartSlice.reducer;
