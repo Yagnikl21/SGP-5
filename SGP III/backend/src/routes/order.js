@@ -48,8 +48,20 @@ router.put("/:orderId", async (req, res) => {
       // Update the orderPlaced field to true
       order.orderDelivered = true;
       await order.save();
-  
+
+      const userId = order.user; 
+      const cart = await Cart.findOne({ user: userId });
+      console.log(cart);
+      if (cart) {
+        cart.items = [];
+        cart.total = 0;
+        console.log("Cart cleared");
+        await cart.save();
+        
+      }
+
       res.json({ message: "Order marked as Delivered", order: order });
+      
     } catch (err) {
       res.status(500).json({ message: "Server Error" });
     }
