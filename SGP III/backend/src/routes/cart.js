@@ -65,5 +65,44 @@ router.put("/:userId/update", async (req, res) => {
   }
 });
 
+router.put("/:userId/:productId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+
+    // Find the user's cart
+    const cart = await Cart.findOne({ user: userId });
+    // console.log(cart)
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // Find the cart item corresponding to the productId
+    const cartItem = cart.items.find(item => item.icecream.toString() === productId);
+    if (!cartItem) {
+      return res.status(404).json({ message: "Product not found in cart" });
+    }
+
+    // Find the product (icecream) corresponding to the productId
+    const icecream = await Icecream.findById(productId);
+    if (!icecream) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Increment the quantity of the cart item
+    cartItem.quantity += 1;
+
+    // Update the total of the cart
+    const updatedTotal = cart.total + icecream.price;
+    cart.total = updatedTotal;
+
+    await cart.save();
+
+    res.json({ message: "Product quantity incremented", cart: cart });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 
 module.exports = router;
