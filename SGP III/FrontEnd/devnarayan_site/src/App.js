@@ -6,19 +6,26 @@ import Change from "./Page/Login/Change";
 import { Route, Routes } from "react-router-dom";
 import About from "./Page/About/About";
 import Forgot from "./Page/Login/Forgot";
-
+import Order from "./Page/Order/order";
 import Products from "./Page/Products/Products";
+import Error from "./Page/Error/error";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { user } = useSelector((state) => state.user);
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
-
       <Route path="/products" element={<Products />} />
+
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/Forgot" element={<Forgot />} />
+
+      <Route path="/order" element={<Order />} />
+      <Route path="*" element={<Error />} />
       <Route path="/Change" element={<Change />} />
     </Routes>
   );

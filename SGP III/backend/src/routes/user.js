@@ -1,25 +1,37 @@
-const express = require("express");
 
-const router=express.Router()
-const User = require("../models/user")
-// const app = express();
+const express = require("express");
+const app = express();
+const router = express.Router();
+const User = require("../models/user");
+const Cart = require("../models/cart");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// app.use(express.json());
-// const port = process.env.PORT || 8080
+app.use(express.json());
+const port = process.env.PORT || 808
 
 
-router.post("/signup", async(req,res)=>{
-    try{
-        const newUser = new User(req.body)
-        const encryptedPassword = await bcrypt.hash(req.body.password , 10);
-        newUser.password = encryptedPassword;
-        const users = await newUser.save({});
-        res.status(201).send(users);
-    }catch(e){
-        res.status(400).send(e);
-    }
-})
+router.post("/signup", async (req, res) => {
+  try {
+    const newUser = new User(req.body);
+    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+    newUser.password = encryptedPassword;
+
+    const user = await newUser.save();
+
+    // Create a cart for the newly registered user
+    const newCart = new Cart({
+      user: user._id,
+      total: 0, // Initialize total as 0
+    });
+
+    const cart = await newCart.save();
+
+    res.status(201).json({ user, cart });
+  } catch (e) {
+    res.status(400).json({ message: "Error in user registration" });
+  }
+});
+
 router.post("/login" , async(req,res)=>{
     const{email , password} = req.body;
     try {

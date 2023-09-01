@@ -1,55 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
 import './Login.scss';
 import Img from '../Login/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../feature/User/userSlice';
-// import Signup from '../Index/Signup';
+import { loginFormScheama } from '../../schema';
+
+const initialValues = {
+    email: "",
+    password: ""
+}
 
 export default function Login() {
-
-    const [email, setemail] = useState("");
-    const [password, setpassword] = useState("");
 
     const { loading, error } = useSelector((state) => state.user);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    async function login(e) {
-        e.preventDefault();
-        // setemail("");
-        // setpassword("");
-        // const item = { email, password };
-        // console.log(item);
-        // let result = await fetch("http://localhost:8080/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Accept: "application/json",
-        //     },
-        //     body: JSON.stringify(item),
-        // });
-        // result = await result.json();
-        // console.log(result);
+    const { values, errors, touched, handleChange, handleSubmit, handleBlur } = useFormik({
+        initialValues,
+        validationSchema: loginFormScheama,
+        onSubmit: (values, action) => {
+            console.log(values);
+            action.resetForm();
 
-        let userCredentials = {
-            email,
-            password
+            dispatch(loginUser(values)).then((result) => {
+                if (result.payload) {
+                    navigate('/');
+                }
+            })
         }
-
-        dispatch(loginUser(userCredentials)).then((result) => {
-            if (result.payload) {
-                setemail('');
-                setpassword('');
-                navigate('/');
-            }
-        })
-    }
+    })
 
     return (
         <>
-
             <div className="login-card-container login-card-body">
                 <div className="login-card">
                     <div className="login-card-logo">
@@ -60,30 +45,43 @@ export default function Login() {
                         <div>Please login to use the platform</div>
                     </div>
 
-                    <form className="login-card-form">
+                    <form className="login-card-form" onSubmit={handleSubmit}>
                         <div className="form-item">
                             <span className="form-item-icon material-symbols-rounded">mail</span>
                             <input
-                                type="text"
                                 placeholder="Enter Email"
                                 id="emailForm"
-                                autofocus=""
-                                required=""
+                                type="text"
+                                name='email'
+                                value={values.email}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                style={{marginBottom: '10px'}}
                             />
+                            {errors.email && touched.email ? (<p className='alert alert-danger'>{errors.email}</p>) : null}
                         </div>
                         <div className="form-item">
                             <span className="form-item-icon material-symbols-rounded">lock</span>
                             <input
-                                type="password"
                                 placeholder="Enter Password"
                                 id="passwordForm"
-                                required=""
+                                type="password"
+                                name="password"
+                                value={values.password}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                style={{marginBottom: '10px'}}
                             />
+                            {errors.password && touched.password ? (<p className='alert alert-danger'>{errors.password}</p>) : null}
                         </div>
 
-                        {/* <a href="#">I forgot my password!</a> */}
                         <Link to="/Forgot">I forgot my password!</Link>
-                        <button type="submit">Sign In</button>
+                        <button type="submit" >{
+                            loading ? 'Loading...' : 'Sign in'}
+                        </button>
+                        {error && (
+                            <div className='alert alert-danger' role='alert'>{error}</div>
+                        )}
                     </form>
                     <div className="login-card-footer">
                         Don't have an account? <Link to="/Signup">Sign up</Link>

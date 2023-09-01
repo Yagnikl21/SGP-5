@@ -53,7 +53,6 @@ export default function Product() {
             const newPosition = scrollPosition + cardWidth;
             setScrollPosition(Math.min(maxScrollPosition, newPosition));
 
-            console.log(scrollPosition);
         }
     };
 

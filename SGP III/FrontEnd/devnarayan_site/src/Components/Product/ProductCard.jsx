@@ -1,10 +1,45 @@
 import React from 'react'
 // import img from '../../assets/Images/product-1.jpg'
 import './product.scss'
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 
-
-export default function ProductCard({data}) {
+export default function ProductCard({ data }) {
   const img = data.image ? data.image : require("../../assets/Images/product-1.jpg");
+
+  const { user } = useSelector(state => state.user)
+
+
+  const UpdateCart = async () => {
+    const apiUrl = `http://localhost:8080/cart:${user._id}/update`;
+
+    const headers = {
+      // 'Authorization': 'Bearer yourAccessToken',
+      'Content-Type': 'application/json',
+    };
+    
+    const requestBody = {
+      key1: 'value1',
+      key2: 'value2',
+    };
+
+    try {
+      const response = await axios.post(apiUrl, requestBody, { headers });
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const clickHandler = () => {
+    if (user) {
+      <Navigate to="/login" />
+    } else {
+      UpdateCart();
+    }
+  }
+
   return (
     <div className="product-item-m col-12 col-md-6 col-lg-3 py-0 px-3">
       <div className="product-item d-flex flex-column align-items-center text-center bg-white  rounded">
@@ -15,7 +50,8 @@ export default function ProductCard({data}) {
           <img className="rounded-circle w-100 h-100" src={img} style={{ objectFit: "cover" }} alt='ImageOfIceCream' />
         </div>
         <h5 className="font-weight-bold mb-4">{data.name}</h5>
-        <a href="" className="btn btn-sm btn-secondary">Order Now</a>
+        {/* <a href="" className="btn btn-sm btn-secondary">Order Now</a> */}
+        <button className='btn btn-sm btn-secondary' onClick={clickHandler}>Add to Cart</button>
       </div>
     </div>
   )
