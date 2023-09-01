@@ -65,44 +65,92 @@ router.put("/:userId/update", async (req, res) => {
   }
 });
 
+// router.put("/:userId/:productId", async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const productId = req.params.productId;
+
+//     // Find the user's cart
+//     const cart = await Cart.findOne({ user: userId });
+//     // console.log(cart)
+//     if (!cart) {
+//       return res.status(404).json({ message: "Cart not found" });
+//     }
+
+//     // Find the cart item corresponding to the productId
+//     const cartItem = cart.items.find(item => item.icecream.toString() === productId);
+//     if (!cartItem) {
+//       return res.status(404).json({ message: "Product not found in cart" });
+//     }
+
+//     // Find the product (icecream) corresponding to the productId
+//     const icecream = await Icecream.findById(productId);
+//     if (!icecream) {
+//       return res.status(404).json({ message: "Product not found" });
+//     }
+
+//     // Increment the quantity of the cart item
+//     cartItem.quantity += 1;
+
+//     // Update the total of the cart
+//     const updatedTotal = cart.total + icecream.price;
+//     cart.total = updatedTotal;
+
+//     await cart.save();
+
+//     res.json({ message: "Product quantity incremented", cart: cart });
+//   } catch (err) {
+//     res.status(500).json({ message: "Server Error" });
+//   }
+// });
+
 router.put("/:userId/:productId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const productId = req.params.productId;
 
     // Find the user's cart
-    const cart = await Cart.findOne({ user: userId });
-    // console.log(cart)
+    let cart = await Cart.findOne({ user: userId });
+    console.log("Stage 1")
     if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
+      // If the cart doesn't exist, create a new one
+      cart = new Cart({ user: userId, items: [], total: 0 });
     }
 
     // Find the cart item corresponding to the productId
     const cartItem = cart.items.find(item => item.icecream.toString() === productId);
+    console.log("Stage 2")
     if (!cartItem) {
-      return res.status(404).json({ message: "Product not found in cart" });
+      // If the product is not in the cart, add it with a quantity of 1
+      const icecream = await Icecream.findById(productId); // Assuming Icecream model exists
+      console.log("Stage 3")
+      if (!icecream) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      console.log("Stage 4")
+      cart.items.push({ icecream: icecream._id, quantity: 1 });
+    } else {
+      // Increment the quantity of the cart item
+      cartItem.quantity += 1;
     }
-
-    // Find the product (icecream) corresponding to the productId
-    const icecream = await Icecream.findById(productId);
-    if (!icecream) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    // Increment the quantity of the cart item
-    cartItem.quantity += 1;
-
+    console.log("Stage 5")
     // Update the total of the cart
-    const updatedTotal = cart.total + icecream.price;
+    // const updatedTotal = cart.total + cartItem.icecream.price;
+    // cart.total = updatedTotal;
+    let updatedTotal = 0;
+    for (const item of cart.items) {
+      const icecream = await Icecream.findById(item.icecream);
+      if (icecream) {
+        updatedTotal += icecream.price * item.quantity;
+      }
+    }
     cart.total = updatedTotal;
-
+    console.log("Stage 6")
     await cart.save();
-
+    console.log("Stage 7")
     res.json({ message: "Product quantity incremented", cart: cart });
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
   }
 });
-
-
 module.exports = router;
