@@ -15,10 +15,7 @@ export const loginUser = createAsyncThunk(
 );
 
 const localUser = JSON.parse(localStorage.getItem("user"));
-// const localUser = {
-//   name: "yagnik android",
-// };
-console.log(localUser, "LocalUser is OK");
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
