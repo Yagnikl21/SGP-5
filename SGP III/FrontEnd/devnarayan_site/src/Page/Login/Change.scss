@@ -1,4 +1,4 @@
-.Forgot-card-body {
+.Change-card-body {
 
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.Forgot-card {
+.Change-card {
     // width: 450px;
     background: rgba(255, 255, 255, .5);
     padding: 4rem;
@@ -68,7 +68,7 @@
 
 // }
 
-.Forgot-card-logo {
+.Change-card-logo {
     margin-bottom: 2rem;
 
     img {
@@ -76,13 +76,13 @@
     }
 }
 
-.Forgot-card-logo,
-.Forgot-card-header,
-.Forgot-card-footer {
+.Change-card-logo,
+.Change-card-header,
+.Change-card-footer {
     text-align: center;
 }
 
-.Forgot-card-header {
+.Change-card-header {
     margin-bottom: 2rem;
 
     h1 {
@@ -97,7 +97,7 @@
     }
 }
 
-.Forgot-card-form {
+.Change-card-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -129,7 +129,7 @@
     }
 }
 
-.Forgot-card-footer {
+.Change-card-footer {
     margin-top: 1.5rem;
     font-size: calc(1rem * .8);
 }
@@ -148,7 +148,7 @@
     transition: background .5s;
 }
 
-.Forgot-card-social {
+.Change-card-social {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -163,7 +163,7 @@
     }
 }
 
-.Forgot-card-social-btns {
+.Change-card-social-btns {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,42 +188,42 @@
 }
 
 // @media (max-width: 548px) {
-//     .Forgot-card-container {
+//     .Change-card-container {
 //         padding: 2rem 2rem;
 //     }
 
 
 //     @media (max-width: 500px) {
-//         .Forgot-card-container {
+//         .Change-card-container {
 //             padding: 2rem 0;
 //         }
 //     }
 // }
 @media screen and (min-width: 549px) {
-    .Forgot-card {
+    .Change-card {
         width: 480px;
     }
 }
 
 @media screen and (min-width: 768px) {
-    .Forgot-card {
+    .Change-card {
         width: 600px;
     }
 }
 
 @media screen and (min-width: 992px) {
-    .Forgot-card {
+    .Change-card {
         width: 600px;
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .Forgot-card {
+    .Change-card {
         width: 460px;
     }
 }
 
-.Forgot-card-container {
+.Change-card-container {
     padding: 2rem 2rem;
 
     @media (max-width: 548px) {
@@ -236,7 +236,7 @@
 }
 
 @media (max-width: 800px) {
-    .Forgot-card {
+    .Change-card {
         width: 70vw;
     }
 }
