@@ -68,7 +68,7 @@ export default function Navbar() {
                 <NavLink to="/about" className="nav-item nav-link" style={({ isActive }) => ({
                   color: isActive ? '#F195B2' : '#77777'
                 })}>About</NavLink>
-                <NavLink to="/product" className="nav-item nav-link" style={({ isActive }) => ({
+                <NavLink to="/products" className="nav-item nav-link" style={({ isActive }) => ({
                   color: isActive ? '#F195B2' : '#77777'
                 })}>Product</NavLink>
               </div>
