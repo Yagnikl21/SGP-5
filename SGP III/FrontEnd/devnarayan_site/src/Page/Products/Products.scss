@@ -2,6 +2,7 @@
     padding: 50px 0;
     background-color: #f3f6ff;
     min-height: 100vh;
+    margin-top: -150px;
 
     .btn-outline-primary {
         color: #F195B2;
@@ -44,34 +45,34 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 10px;
+        // margin-left: 40px;
+        padding: 50px 0;
 
         a {
-            padding: 10px 10px;
+            padding: 10px 20px;
             justify-content: center;
             display: inline-block;
-            // padding: 10px 20px;
             margin: 5px;
             font-size: 16px;
+            background-color: #ffffff;
             text-align: center;
             text-decoration: none;
             border: 2px solid var(--primary);
-            border-radius: 5px;
+            border-radius: 100px;
+            /* Uncomment this line for circular border radius */
             color: var(--primary);
             transition: background-color 0.3s, color 0.3s;
 
             &:hover {
                 background-color: var(--primary);
-                color: white;
+                color: rgb(0, 0, 0);
             }
 
-            &.active {
-                background-color: var(--primary);
-                color: white;
-            }
+            // &.active {
+            //     background-color: var(--primary);
+            //     color: white;
+            // }
         }
-
-
 
         ul {
             gap: 20px;
