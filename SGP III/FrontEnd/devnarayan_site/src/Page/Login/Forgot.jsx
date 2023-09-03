@@ -2,28 +2,64 @@ import React, { useState } from 'react';
 import './Forgot.scss';
 import Img from '../Login/logo.png';
 import OTPInput from "otp-input-react";
-
+import { useNavigate } from "react-router-dom";
 const OtpInputCard = ({ title, sendOTP, otpEnabled, ...rest }) => {
     const [OTP, setOTP] = useState("");
-
-
-
+    const navigate = useNavigate();
     if (!otpEnabled) {
         return null; // Don't render the OTP input if otpEnabled is false
     }
-
+    async function changePassword(){
+        try {
+            console.log(OTP);
+            const item2 ={OTP}
+            let result = await fetch("http://localhost:8080/verifyOTP", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify(item2),
+            });
+            if(result){
+                result = await result.json();
+                console.log(result);
+                // localStorage.setItem('id',result)
+                navigate('/changepassword');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <div style={{ padding: 12 }}>
             <div style={{ marginBottom: 12 }}>{title}</div>
             <OTPInput value={OTP} onChange={setOTP} {...rest} />
-            <button>Verify OTP</button>
+            <button onClick={changePassword}>Verify OTP</button>
         </div>
     );
 };
 
 export default function Forgot() {
     const [otpEnabled, setOtpEnabled] = useState(false);
-
+    const [email, setemail] = useState("");
+    async function sendOnetimepassword() {
+        const item = {email};
+        console.log(item);
+        setOtpEnabled(true);
+        console.log(item);
+        let result = await fetch("http://localhost:8080/forgot-password", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(item),
+        });
+        result = await result.json();
+        console.log(result.isMatched._id);
+        localStorage.setItem('id' , result.isMatched._id)
+    }
     return (
         <>
             <div className="Forgot-card-body">
@@ -45,16 +81,13 @@ export default function Forgot() {
                                     id="emailForm"
                                     autoFocus=""
                                     required=""
+                                    name="email"
+                                    onChange = {(e)=>setemail(e.target.value)}
                                 />
                             </div>
                             <button
                                 type="button"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    // Disable OTP input before sending OTP
-                                    setOtpEnabled(true); // Enable OTP input
-                                    // Handle other form submission logic here
-                                }}
+                                onClick={sendOnetimepassword}
                             >
                                 Send OTP
                             </button>

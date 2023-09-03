@@ -11,6 +11,7 @@ import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";
 import Cart from './Components/Cart/cart';
+import Changepassword from "./Page/Login/Change";
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/Forgot" element={<Forgot />} />
-
+      <Route path="/changepassword" element={<Changepassword />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/order" element={<Order />} />
       </Route >
