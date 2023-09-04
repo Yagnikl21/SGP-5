@@ -22,9 +22,10 @@ router.get("/:userId", async (req, res) => {
 });
 
 //Router to update cart according to request params
-router.put("/:userId/update", async (req, res) => {
+router.post("/:userId/update", async (req, res) => {
   try {
     const userId = req.params.userId;
+    console.log(req.body);
     const updatedItems = req.body;
 
     const cart = await Cart.findOne({ user: userId });
@@ -32,7 +33,7 @@ router.put("/:userId/update", async (req, res) => {
       return res.status(404).json({ message: "Cart not found" });
     }
 
-    for (const updatedItem of updatedItems) {
+    for (let updatedItem of updatedItems) {
       const itemIndex = cart.items.findIndex(item => item.icecream.toString() === updatedItem.itemId);
       if (itemIndex !== -1) {
         // Update existing item
@@ -63,6 +64,7 @@ router.put("/:userId/update", async (req, res) => {
 
     res.json(cart);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Server Error" });
   }
 });
@@ -110,7 +112,7 @@ router.put("/:userId/:productId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const productId = req.params.productId;
-
+    console.log("Cart Api is Working");
     // Find the user's cart
     let cart = await Cart.findOne({ user: userId });
     console.log("Stage 1")

@@ -1,46 +1,79 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+// import { openModal } from '../modal/modalSlice';
 
-export const userCart = createAsyncThunk('cart/userCart',
-    async(userID)=>{
-        const request = await axios.post('http://localhost:8080/cart',userID);
-        const response = await request.data;   
-        console.log(response);    
-        return response;
+const url = 'http://localhost:8080/cart/64ef3f4411498b49757bdfe5';
+
+const initialState = {
+  cartItems: [],
+  amount: 4,
+  total: 0,
+  isLoading: true,
+};
+
+export const getCartItems = createAsyncThunk(
+  'cart/getCartItems',
+  async (name, thunkAPI) => {
+    try {
+      const resp = await axios(url);
+      console.log("I am hear");
+      return resp.data.item;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('something went wrong');
     }
-)
+  }
+);
 
 const cartSlice = createSlice({
-    name:'cart',
-    initialState:{
-        loading:false,
-        cartData:null,
-        error:null
+  name: 'cart',
+  initialState,
+  reducers: {
+    clearCart: (state) => {
+      state.cartItems = state.cartItems.filter(() => 1 === 0);
     },
-    extraReducers:(builder)=>{
-        builder
-        .addCase(userCart.pending,(state)=>{
-            state.loading = true;
-            state.cartData=null;
-            state.error=null;
-        })
-        .addCase(userCart.fulfilled,(state,action)=>{
-            state.loading = false;
-            state.cartData = action.payload;
-            state.error = null;
-        })
-        .addCase(userCart.rejected , (state,action)=>{
-            state.loading = false;
-            state.cartData = null;
-            console.log(action.error.message);
-            if(action.error.message === 'Request failed with status code 401'){
-                state.error = 'Access Denied!';
-            }
-            else{
-                state.error = action.error.message;
-            }
-        })
+    removeItem: (state, action) => {
+      const itemId = action.payload;
+      state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
+    },
+    increase: (state, { payload }) => {
+      const cartItem = state.cartItems.find((item) => item.id === payload.id);
+      cartItem.amount = cartItem.amount + 1;
+    },
+    decrease: (state, { payload }) => {
+      const cartItem = state.cartItems.find((item) => item.id === payload.id);
+      cartItem.amount = cartItem.amount - 1;
+    },
+    calculateTotals: (state) => {
+      let amount = 0;
+      let total = 0;
+      state.cartItems.forEach((item) => {
+        amount += item.amount;
+        total += item.amount * item.price;
+      });
+      state.amount = amount;
+      state.total = total;
     }
-})
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCartItems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCartItems.fulfilled, (state, action) => {
+        // console.log(action);
+        state.isLoading = false;
+        state.cartItems = action.payload;
+      })
+      .addCase(getCartItems.rejected, (state, action) => {
+        console.log(action);
+        state.isLoading = false;
+      });
+  },
+});
+
+// console.log(cartSlice);
+export const { clearCart, removeItem, increase, decrease, calculateTotals } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

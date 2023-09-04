@@ -9,23 +9,22 @@ export default function ProductCard({ data }) {
   const img = data.image ? data.image : require("../../assets/Images/product-1.jpg");
 
   const { user } = useSelector(state => state.user)
-
-
+  
   const UpdateCart = async () => {
-    const apiUrl = `http://localhost:8080/cart:${user._id}/update`;
+    console.log(user._id);
+    console.log(data._id);
+    const apiUrl = `http://localhost:8080/cart/${user._id}/${data._id}`;
 
     const headers = {
       // 'Authorization': 'Bearer yourAccessToken',
       'Content-Type': 'application/json',
     };
-    
+
     const requestBody = {
-      key1: 'value1',
-      key2: 'value2',
     };
 
     try {
-      const response = await axios.post(apiUrl, requestBody, { headers });
+      const response = await axios.put(apiUrl, requestBody, { headers });
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -33,8 +32,9 @@ export default function ProductCard({ data }) {
   }
 
   const clickHandler = () => {
-    if (user) {
-      <Navigate to="/login" />
+    if (user===null) {
+      console.log("Navigate to login");
+      return <Navigate to="/login" />;
     } else {
       UpdateCart();
     }

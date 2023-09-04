@@ -1,14 +1,47 @@
-
 const express = require("express");
+
+const router=express.Router()
+const User = require("../models/user")
+const randomstring = require("randomstring");
+const nodemailer = require("nodemailer");
 const app = express();
-const router = express.Router();
-const User = require("../models/user");
-const Cart = require("../models/cart");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 app.use(express.json());
-const port = process.env.PORT || 808
+const port = process.env.PORT || 8080;
 
+// Function Call for Reset password After OTP verification
+const sentResetPasswordMail = async (name, email, token) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: 'testtest963test@gmail.com',
+                pass: 'mwceobauovhxjvzf'
+            }
+        });
+        const mailOption = {
+            from: 'testtest963test@gmail.com',
+            to: email,
+            subject: 'Forgot Password',
+            html: '<p>Your One time Password is :'+token +'</p>'
+        }
+        transporter.sendMail(mailOption, function (error, info) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log("Email sent");
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 
 router.post("/signup", async (req, res) => {
   try {
@@ -33,6 +66,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login" , async(req,res)=>{
+    console.log("call");
     const{email , password} = req.body;
     try {
         const existingUser = await User.findOne({email:email});
@@ -52,4 +86,60 @@ router.post("/login" , async(req,res)=>{
     }
 })
 
+router.post("/forgot-password", async (req, res) => {
+    try {
+        const email = req.body.email;
+        // console.log(email);
+        const isMatched = await User.findOne({ email: email });
+        console.log(isMatched);
+        if (isMatched) {
+            var val = Math.floor(1000 + Math.random() * 9000);
+            console.log(val);
+            const Data = await User.updateOne({ email: email }, { $set: { token: 9876 } });
+            // console.log(Data);
+            
+            sentResetPasswordMail('Data.username', email, val);
+            res.status(200).send({isMatched});
+        }
+        else {
+            res.status(200).send({ message: "This email does not exist" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error)
+    }
+})
+
+router.post("/verifyOTP", async (req, res) => {
+    try {
+        const id= req.body.id;
+        const otp = req.body.otp;
+        const tokenData = await User.findOne({ token: otp });
+        // console.log(tokenData);
+        if (tokenData) {
+            res.status(200).send(tokenData);
+        }
+        else {
+            res.status(404).send("token not true");
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+})
+router.post("/change-password",async (req, res) => {
+    try {
+            const tokenData = req.body.id;
+            const password = req.body.newpassword;
+            console.log(tokenData);
+            const newPassword = await bcrypt.hash(password, 10);
+            const userData = await User.findByIdAndUpdate({ _id: tokenData }, { $set: { password: newPassword, token: '' } }, { new: true });
+            res.status(200).send({ userData });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+})
 module.exports=router

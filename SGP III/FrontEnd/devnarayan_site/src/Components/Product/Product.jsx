@@ -6,8 +6,6 @@ import ProductCard from './ProductCard';
 
 export default function Product() {
 
-
-
     const URL = "http://localhost:8080/icecream/allice";
 
     const [product, setProduct] = useState([]);
@@ -15,10 +13,7 @@ export default function Product() {
         const fechData = async () => {
             try {
                 const res = await axios.get(URL);
-                console.log(res);
                 setProduct(res.data);
-                console.log(res.data);
-
             } catch (err) {
                 console.log('Error to fech Data');
                 console.log(err);

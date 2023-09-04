@@ -17,7 +17,7 @@ export default function Carousel() {
                                     <div className="p-3 box" >
                                     {/* style="max-width: 900px;"> */}
                                         <h4 className="text-white text-uppercase mb-md-3 hsmall">Traditional & Delicious</h4>
-                                        <h1 className="display-3 text-white mb-md-4 hlarge">Traditional Ice Cream Since 1950</h1>
+                                        <h1 className="display-3 text-white mb-md-4 hlarge">Traditional Ice Cream Since 2005</h1>
                                         <a href="" className="btn btn-primary py-md-3 px-md-5 mt-2 button">Learn More</a>
                                     </div>
                                 </div>
