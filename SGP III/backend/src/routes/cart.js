@@ -13,6 +13,7 @@ router.get("/:userId", async (req, res) => {
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
+    cart.total=cart.total.toFixed(2);
 
     res.json(cart);
   } catch (err) {
@@ -45,6 +46,7 @@ router.put("/:userId/update", async (req, res) => {
         itemToUpdate.quantity = updatedItem.quantity;
 
         cart.total = cart.total - (icecream.price * oldQuantity) + (icecream.price * updatedItem.quantity);
+        cart.total = cart.total.toFixed(2);
       } else {
         // Add new item to cart
         const icecream = await Icecream.findById(updatedItem.itemId);
@@ -144,7 +146,7 @@ router.put("/:userId/:productId", async (req, res) => {
         updatedTotal += icecream.price * item.quantity;
       }
     }
-    cart.total = updatedTotal;
+    cart.total = updatedTotal.toFixed(2);
     console.log("Stage 6")
     await cart.save();
     console.log("Stage 7")

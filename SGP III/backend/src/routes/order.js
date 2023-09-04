@@ -22,7 +22,7 @@ router.post("/:userId", async (req, res) => {
     const newOrder = new Order({
       user: userId,
       cart: cart._id,
-      total: cart.total,
+      total: cart.total.toFixed(2),
       orderPlaced: true,
       orderDelivered: false, // Set initial status to not delivered
     });
@@ -47,6 +47,7 @@ router.put("/:orderId", async (req, res) => {
   
       // Update the orderPlaced field to true
       order.orderDelivered = true;
+      order.total=order.total.toFixed(2);
       await order.save();
 
       const userId = order.user; 

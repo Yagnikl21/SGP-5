@@ -14,7 +14,7 @@ router.post("/cice", upload.single("image"), async (req, res) => {
 
     const newIcecreamData = {
       name: name,
-      price: price,
+      price: price.toFixed(2),
       quantity: quantity,
       type: type,
       keyword: keyword,
@@ -50,7 +50,7 @@ router.get("/allice", async (req, res) => {
     const modifiedIceCreams = allIceCreams.map((ice) => ({
       _id: ice._id,
       name: ice.name,
-      price: ice.price,
+      price: ice.price.toFixed(2),
       image: ice.image && ice.image.data
         ? `data:${ice.image.contentType};base64,${ice.image.data.toString("base64")}`
         : null,
@@ -79,8 +79,20 @@ router.get("/ice/:id", async (req, res) => {
     if (!iceCream) {
       return res.status(404).json({ error: "Ice cream not found" });
     }
+    const modifiedIceCreams = {
+      _id: iceCream._id,
+      name: iceCream.name,
+      price: iceCream.price.toFixed(2),
+      image: iceCream.image && iceCream.image.data
+        ? `data:${iceCream.image.contentType};base64,${iceCream.image.data.toString("base64")}`
+        : null,
+      quantity: iceCream.quantity,
+      type: iceCream.type,
+      keyword: iceCream.keyword,
+      like: iceCream.like,
+    }
 
-    res.status(200).json(iceCream);
+    res.status(200).json(modifiedIceCreams);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to retrieve ice cream" });
@@ -126,7 +138,7 @@ router.put("/uice/:id", upload.single("image"), async (req, res) => {
 
     // Update the ice cream properties
     iceCream.name = name;
-    iceCream.price = price;
+    iceCream.price = price.toFixed(2);
     iceCream.quantity = quantity;
     iceCream.type = type;
     iceCream.keyword = keyword;
