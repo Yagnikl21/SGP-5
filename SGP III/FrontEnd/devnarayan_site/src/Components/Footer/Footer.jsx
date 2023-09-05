@@ -8,7 +8,7 @@ export default function Footer() {
             <div className="row">
                 <div className="col-12 mb-4">
                     <a href="index.html" className="navbar-brand m-0">
-                        <h1 className="m-0 mt-n2 display-4 text-primary"><span className="text-secondary">i</span>CREAM</h1>
+                        <h1 className="m-0 mt-n2 display-4 text-primary"><span className="text-secondary">DEV</span>NARAYAN</h1>
                     </a>
                 </div>
                 <div className="col-12 mb-4">

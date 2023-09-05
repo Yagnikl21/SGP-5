@@ -9,10 +9,11 @@ import Forgot from "./Page/Login/Forgot";
 import Order from "./Page/Order/order";
 import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
-import { useSelector } from "react-redux";
+import PrivateRoutes from "./feature/PrivateRoutes";
+import Cart from './Components/Cart/cart';
+import Changepassword from "./Page/Login/Change";
 
 function App() {
-  const { user } = useSelector((state) => state.user);
 
   return (
     <Routes>
@@ -23,10 +24,13 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/Forgot" element={<Forgot />} />
-
-      <Route path="/order" element={<Order />} />
-      <Route path="*" element={<Error />} />
+      <Route path="/changepassword" element={<Changepassword />} />
+      <Route element={<PrivateRoutes />}>
+        <Route path="/order" element={<Order />} />
+      </Route >
+      <Route path="/cart" element={<Cart />} />
       <Route path="/Change" element={<Change />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 }

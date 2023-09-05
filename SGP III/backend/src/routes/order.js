@@ -26,7 +26,7 @@ router.post("/:userId", async (req, res) => {
       orderPlaced: true,
       orderDelivered: false, // Set initial status to not delivered
     });
-
+    newOrder.total = parseFloat(newOrder.total).toFixed(2)
     await newOrder.save();
 
     res.status(201).json({ message: "Order placed successfully", order: newOrder });
@@ -47,6 +47,7 @@ router.put("/:orderId", async (req, res) => {
   
       // Update the orderPlaced field to true
       order.orderDelivered = true;
+      order.total=parseFloat(order.total).toFixed(2);
       await order.save();
 
       const userId = order.user; 
