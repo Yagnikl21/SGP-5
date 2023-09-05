@@ -14,7 +14,7 @@ router.post("/cice", upload.single("image"), async (req, res) => {
 
     const newIcecreamData = {
       name: name,
-      price: price.toFixed(2),
+      price: price,
       quantity: quantity,
       type: type,
       keyword: keyword,
@@ -27,7 +27,7 @@ router.post("/cice", upload.single("image"), async (req, res) => {
         contentType: file.mimetype,
       };
     }
-
+    newIcecreamData.price=parseFloat(newIcecreamData.price).toFixed(2);
     const newIcecream = new Icecream(newIcecreamData);
     const savedIcecream = await newIcecream.save();
 
@@ -50,7 +50,7 @@ router.get("/allice", async (req, res) => {
     const modifiedIceCreams = allIceCreams.map((ice) => ({
       _id: ice._id,
       name: ice.name,
-      price: ice.price.toFixed(2),
+      price: ice.price,
       image: ice.image && ice.image.data
         ? `data:${ice.image.contentType};base64,${ice.image.data.toString("base64")}`
         : null,
@@ -59,6 +59,7 @@ router.get("/allice", async (req, res) => {
       keyword: ice.keyword,
       like: ice.like,
     }));
+    modifiedIceCreams.price=parseFloat(modifiedIceCreams.price).toFixed(2)
     res.status(200).json(modifiedIceCreams);
   } catch (err) {
     console.log(err);
@@ -82,7 +83,7 @@ router.get("/ice/:id", async (req, res) => {
     const modifiedIceCreams = {
       _id: iceCream._id,
       name: iceCream.name,
-      price: iceCream.price.toFixed(2),
+      price: iceCream.price,
       image: iceCream.image && iceCream.image.data
         ? `data:${iceCream.image.contentType};base64,${iceCream.image.data.toString("base64")}`
         : null,
@@ -91,7 +92,7 @@ router.get("/ice/:id", async (req, res) => {
       keyword: iceCream.keyword,
       like: iceCream.like,
     }
-
+    modifiedIceCreams.price=parseFloat(modifiedIceCreams.price).toFixed(2)
     res.status(200).json(modifiedIceCreams);
   } catch (err) {
     console.log(err);
@@ -138,7 +139,7 @@ router.put("/uice/:id", upload.single("image"), async (req, res) => {
 
     // Update the ice cream properties
     iceCream.name = name;
-    iceCream.price = price.toFixed(2);
+    iceCream.price = price;
     iceCream.quantity = quantity;
     iceCream.type = type;
     iceCream.keyword = keyword;
@@ -151,7 +152,7 @@ router.put("/uice/:id", upload.single("image"), async (req, res) => {
         contentType: file.mimetype,
       };
     }
-
+    iceCream.price=parseFloat(iceCream.price).toFixed(2)
     // Save the updated ice cream
     const updatedIcecream = await iceCream.save();
 
