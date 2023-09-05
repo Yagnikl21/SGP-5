@@ -5,7 +5,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import Navbar from '../../Components/Navbar/Navbar';
+import Footer from '../../Components/Footer/Footer'
+import Header from '../../Components/Header/Header';
 export default function order() {
 
     const array = [1, 2, 3, 4];
@@ -35,6 +37,8 @@ export default function order() {
 
     return (
         <>
+            <Navbar />
+            <Header pageTitle="Order" breadcrumbs={['Home', 'Order']} />
             <div className="order">
                 <h1>Order Details</h1>
                 <div className="details">
@@ -85,7 +89,7 @@ export default function order() {
                             <p>Tax</p>
                             <p>0.00</p>
                         </span>
-                        <hr/>
+                        <hr />
                         <span className='d-flex justify-content-between'>
                             <p>Total</p>
                             <p>500.00</p>
@@ -93,6 +97,7 @@ export default function order() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     )
 }
