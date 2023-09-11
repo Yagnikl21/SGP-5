@@ -79,8 +79,20 @@ router.get("/ice/:id", async (req, res) => {
     if (!iceCream) {
       return res.status(404).json({ error: "Ice cream not found" });
     }
+    const modifiedIceCreams = {
+      _id: iceCream._id,
+      name: iceCream.name,
+      price: iceCream.price,
+      image: iceCream.image && iceCream.image.data
+        ? `data:${iceCream.image.contentType};base64,${iceCream.image.data.toString("base64")}`
+        : null,
+      quantity: iceCream.quantity,
+      type: iceCream.type,
+      keyword: iceCream.keyword,
+      like: iceCream.like,
+    }
 
-    res.status(200).json(iceCream);
+    res.status(200).json(modifiedIceCreams);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to retrieve ice cream" });

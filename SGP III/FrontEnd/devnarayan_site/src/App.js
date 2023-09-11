@@ -11,7 +11,7 @@ import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";
 import Cart from './Components/Cart/cart';
-import Changepassword from "./Page/Login/Change";
+import Changepassword from "./Page/Login/Changepassword";
 
 function App() {
 
