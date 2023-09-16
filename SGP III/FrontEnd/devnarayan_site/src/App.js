@@ -27,8 +27,8 @@ function App() {
       <Route path="/changepassword" element={<Changepassword />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/order" element={<Order />} />
+        <Route path="/cart" element={<Cart />} />
       </Route >
-      <Route path="/cart" element={<Cart />} />
       <Route path="/Change" element={<Change />} />
       <Route path="*" element={<Error />} />
     </Routes>

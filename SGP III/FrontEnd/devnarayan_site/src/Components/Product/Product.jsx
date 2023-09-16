@@ -24,6 +24,7 @@ export default function Product() {
     }, [])
 
     const ShowProduct = product.map((p) => {
+        console.log(p)
         return (
             <ProductCard data={p} />
         )

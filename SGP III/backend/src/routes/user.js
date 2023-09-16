@@ -2,6 +2,7 @@ const express = require("express");
 
 const router=express.Router()
 const User = require("../models/user")
+const Cart = require("../models/cart")
 const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
 const app = express();
@@ -45,17 +46,22 @@ const sentResetPasswordMail = async (name, email, token) => {
 
 router.post("/signup", async (req, res) => {
   try {
+    console.log("Stage");
     const newUser = new User(req.body);
+    console.log(req.body)
     const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+    console.log("Encrypted Password")
     newUser.password = encryptedPassword;
+    console.log(newUser);
 
     const user = await newUser.save();
-
+    console.log(user);
     // Create a cart for the newly registered user
     const newCart = new Cart({
       user: user._id,
       total: 0, // Initialize total as 0
     });
+    console.log(newCart)
 
     const cart = await newCart.save();
 

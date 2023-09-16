@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './cart.scss'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { removeItem } from '../../feature/Cart/cartSlice';
+import { increase, decrease } from '../../feature/Cart/cartSlice';
 
 function SingleProduct({ item, clickHandler }) {
     const [product, setProduct] = useState({});
@@ -12,6 +12,7 @@ function SingleProduct({ item, clickHandler }) {
             try {
                 const res = await axios.get(`http://localhost:8080/icecream/ice/${item.icecream._id}`);
                 setProduct(res.data);
+                console.log(res);
             }
             catch (err) {
                 console.log(err);
@@ -23,20 +24,24 @@ function SingleProduct({ item, clickHandler }) {
     const img = product.image ? product.img : require("../../assets/Images/product-1.jpg");
     return (
         <div className="item">
-            <img src={img} alt="" />
-            <div className="details">
-                <h1>{product.name}</h1>
-                <p>{item.desc?.substring(0, 100)}</p>
-                <div className="price">
-                    {item.quantity} x ${product.price}
+            <div className="det">
+
+                <img src={img} alt="" />
+                <div className="details">
+                    <h1>{product.name}</h1>
+                    <div className="price">
+                        Quantity : {item.quantity}
+                    </div>
+                    <div className="price">
+                        ${product.price}
+                    </div>
                 </div>
             </div>
-            <i className="fa-solid fa-trash delete" onClick={
-                () => {
-                    dispatch(removeItem(item._id))
-                    clickHandler()
-                }
-            }></i>
+            <div className='but'>
+                <div className='button' onClick={() => dispatch(increase(product._id))}>+</div>
+                <div className='button' onClick={() => dispatch(decrease(product._id))}>-</div>
+            </div>
+
         </div>
     )
 }

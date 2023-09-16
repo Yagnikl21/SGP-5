@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 // import { openModal } from '../modal/modalSlice';
 
-const { users } = JSON.parse(localStorage.getItem('user'));
-const url = `http://localhost:8080/cart/${users._id}`;
+const user = JSON.parse(localStorage.getItem('user'));
+const users = user == null ? null : user.users;
 
 const initialState = {
   cartItems: [],
@@ -15,6 +15,8 @@ const initialState = {
 export const getCartItems = createAsyncThunk(
   'cart/getCartItems',
   async (name, thunkAPI) => {
+    const url = `http://localhost:8080/cart/${users._id}`;
+    console.log("Request")
     try {
       const resp = await axios(url);
       return resp.data;
@@ -32,11 +34,33 @@ const updateCart = async (prop) => {
 
   const body = prop;
   try {
-    const res = await axios.post(`http://localhost:8080/cart/${users._id}/update` , body , {headers} );
+    const res = await axios.post(`http://localhost:8080/cart/${users._id}/update`, body, { headers });
     console.log(res);
     return res;
   } catch (error) {
     console.log(error);
+  }
+}
+
+const increaseItem = async (prop) => {
+  try {
+    const res = await axios.put(`http://localhost:8080/cart/add/${users._id}/${prop}`);
+    console.log(res);
+    return res.statusCode;
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
+const decreaseItem = async (prop) => {
+  try {
+    const res = await axios.put(`http://localhost:8080/cart/sub/${users._id}/${prop}`);
+    console.log(res);
+    return res.statusCode;
+  }
+  catch (error) {
+    console.error(error);
   }
 }
 
@@ -53,12 +77,14 @@ const cartSlice = createSlice({
       updateCart(state.cartItems);
     },
     increase: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      cartItem.amount = cartItem.amount + 1;
+      const cartItem = state.cartItems.find((item) => item.icecream._id === payload);
+      cartItem.quantity = cartItem.quantity + 1;
+      increaseItem(payload);
     },
     decrease: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      cartItem.amount = cartItem.amount - 1;
+      const cartItem = state.cartItems.find((item) => item.icecream._id === payload);
+      cartItem.quantity = cartItem.quantity - 1;
+      decreaseItem(payload);
     },
     calculateTotals: (state) => {
       let amount = 0;

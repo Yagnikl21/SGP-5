@@ -2,7 +2,6 @@
     padding: 50px 0;
     background-color: #f3f6ff;
     min-height: 100vh;
-    margin-top: -150px;
 
     .btn-outline-primary {
         color: #F195B2;
@@ -45,8 +44,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        // margin-left: 40px;
-        padding: 50px 0;
+
+        padding: 50px 100px;
 
         a {
             padding: 10px 20px;
@@ -54,12 +53,10 @@
             display: inline-block;
             margin: 5px;
             font-size: 16px;
-            background-color: #ffffff;
             text-align: center;
             text-decoration: none;
             border: 2px solid var(--primary);
             border-radius: 100px;
-            /* Uncomment this line for circular border radius */
             color: var(--primary);
             transition: background-color 0.3s, color 0.3s;
 
@@ -68,10 +65,6 @@
                 color: rgb(0, 0, 0);
             }
 
-            // &.active {
-            //     background-color: var(--primary);
-            //     color: white;
-            // }
         }
 
         ul {

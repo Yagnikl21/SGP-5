@@ -1,8 +1,21 @@
 import React from 'react'
 import './Navbar.scss'
 import { NavLink } from 'react-router-dom'
+import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import styled from '@emotion/styled';
+import { Badge } from '@mui/material';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 export default function Navbar() {
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: -3,
+      top: 13,
+      border: `2px solid #666666`,
+      padding: '0 4px',
+    },
+  }));
   return (
     <>
       <div className="container-fluid py-3 d-none d-md-block section">
@@ -76,7 +89,7 @@ export default function Navbar() {
                 <h1 className="m-0 display-4 text-primary"><span className="text-secondary">DEV</span>NARAYAN</h1>
               </NavLink>
               <div className="navbar-nav mr-auto py-0">
-                <NavLink to="/servies" className="nav-item nav-link" style={({ isActive }) => ({
+                {/* <NavLink to="/servies" className="nav-item nav-link" style={({ isActive }) => ({
                   color: isActive ? '#F195B2' : '#77777'
                 })}>Service</NavLink>
                 <NavLink to="/gallery" className="nav-item nav-link" style={({ isActive }) => ({
@@ -84,7 +97,12 @@ export default function Navbar() {
                 })}>Gallery</NavLink>
                 <NavLink to="/contact" className="nav-item nav-link" style={({ isActive }) => ({
                   color: isActive ? '#F195B2' : '#77777'
-                })}>Contact</NavLink>
+                })}>Contact</NavLink> */}
+                 <div className="cartIcon">
+                  <ShoppingCartOutlinedIcon className="Icon"/>
+                  <span>5</span> 
+                </div>
+                {/* <i class="fa-solid fa-cart-shopping"></i> */}
               </div>
             </div>
           </nav>
