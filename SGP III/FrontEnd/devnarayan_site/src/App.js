@@ -6,7 +6,7 @@ import Change from "./Page/Login/Change";
 import { Route, Routes } from "react-router-dom";
 import About from "./Page/About/About";
 import Forgot from "./Page/Login/Forgot";
-import Order from "./Page/Order/order";
+import Order from "./Page/Order/Order";
 import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";
@@ -27,8 +27,8 @@ function App() {
       <Route path="/changepassword" element={<Changepassword />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/order" element={<Order />} />
+        <Route path="/cart" element={<Cart />} />
       </Route >
-      <Route path="/cart" element={<Cart />} />
       <Route path="/Change" element={<Change />} />
       <Route path="*" element={<Error />} />
     </Routes>

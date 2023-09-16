@@ -50,18 +50,18 @@ export default function Products() {
         <>
             <Navbar />
             <Header pageTitle="Products" breadcrumbs={['Home', 'Products']} />
-            <div className='aboutinfo'>
-                <div className="container-fluid py-5">
-                    <div className="container py-5">
-                        <div className="row justify-content-center">
-                            <div className="col-lg-7">
-                                <h1 className="section-title position-relative text-center mb-5">Best Prices We Offer For Ice Cream Lovers</h1>
+            <div className='products'>
+                <div className='aboutinfo'>
+                    <div className="container-fluid py-2">
+                        <div className="container py-2">
+                            <div className="row justify-content-center">
+                                <div className="col-lg-7">
+                                    <h1 className="section-title position-relative text-center mb-5">Best Prices We Offer For Ice Cream Lovers</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className='products'>
                 <div className="filters">
                     <nav>
                         <NavLink to={"/products"}  >All</NavLink>

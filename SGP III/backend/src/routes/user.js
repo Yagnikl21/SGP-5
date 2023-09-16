@@ -3,6 +3,7 @@ const express = require("express");
 const router=express.Router()
 const User = require("../models/user")
 const Cart = require("../models/cart")
+// const Cart = require("../models/cart")
 const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
 const app = express();
@@ -46,11 +47,10 @@ const sentResetPasswordMail = async (name, email, token) => {
 
 router.post("/signup", async (req, res) => {
   try {
+    console.log("Stage");
     const newUser = new User(req.body);
-    console.log(req.body);
     const email = newUser.email;
     const us = await User.findOne({email});
-    console.log(us);
     if(us){
         res.status(400).json({ message: "Email Already Exist" });
         return;
@@ -67,8 +67,8 @@ router.post("/signup", async (req, res) => {
         res.status(400).json({ message: "UserName Already Exist" });
         return;
     }
-    // return;
     const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+    console.log("Encrypted Password")
     newUser.password = encryptedPassword;
     const user = await newUser.save();
     // Create a cart for the newly registered user

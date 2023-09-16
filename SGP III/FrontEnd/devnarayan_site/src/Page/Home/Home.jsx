@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Home.scss'
 import Navbar from '../../Components/Navbar/Navbar'
 import Carousel from '../../Components/Carousel/Carousel'
@@ -7,11 +7,18 @@ import Product from '../../Components/Product/Product'
 import Aboutinfo from '../../Components/Aboutinfo/Aboutinfo'
 import Footer from '../../Components/Footer/Footer'
 import Chefdetails from '../../Components/Chefdetails/Chefdetails'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCartItems } from '../../feature/Cart/cartSlice'
 
 export default function Home() {
     const { user } = useSelector(state => state.user);
-    console.log(user);
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (user !== null) {
+            dispatch(getCartItems());
+        }
+    }, [])
     return (
         <div className="home">
             <Navbar />
