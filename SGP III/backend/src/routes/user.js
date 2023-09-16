@@ -2,6 +2,7 @@ const express = require("express");
 
 const router=express.Router()
 const User = require("../models/user")
+const Cart = require("../models/cart")
 const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
 const app = express();
@@ -46,21 +47,39 @@ const sentResetPasswordMail = async (name, email, token) => {
 router.post("/signup", async (req, res) => {
   try {
     const newUser = new User(req.body);
+    console.log(req.body);
+    const email = newUser.email;
+    const us = await User.findOne({email});
+    console.log(us);
+    if(us){
+        res.status(400).json({ message: "Email Already Exist" });
+        return;
+    }
+    const mobile_number = newUser.mobile_number;
+    const u = await User.findOne({mobile_number});
+    if(u){
+        res.status(400).json({ message: "Mobile Number Already Exist" });
+        return;
+    }
+    const username = newUser.username;
+    const userna = await User.findOne({username});
+    if(userna){
+        res.status(400).json({ message: "UserName Already Exist" });
+        return;
+    }
+    // return;
     const encryptedPassword = await bcrypt.hash(req.body.password, 10);
     newUser.password = encryptedPassword;
-
     const user = await newUser.save();
-
     // Create a cart for the newly registered user
     const newCart = new Cart({
       user: user._id,
       total: 0, // Initialize total as 0
     });
-
     const cart = await newCart.save();
-
     res.status(201).json({ user, cart });
   } catch (e) {
+    console.log(e);
     res.status(400).json({ message: "Error in user registration" });
   }
 });

@@ -14,9 +14,9 @@ const initialState = {
 export const getCartItems = createAsyncThunk(
   'cart/getCartItems',
   async (name, thunkAPI) => {
+    console.log("I am hear");
     try {
       const resp = await axios(url);
-      console.log("I am hear");
       return resp.data.item;
     } catch (error) {
       return thunkAPI.rejectWithValue('something went wrong');
