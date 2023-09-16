@@ -11,8 +11,9 @@ export default function Changepassword() {
     const id = localStorage.getItem('id');
     console.log(id);
     const item = {newpassword , id};
-    async function changePass(e) {
-        e.preventDefault();
+    async function changePass() {
+        console.log("askdajs");
+        // e.preventDefault();
         try {
             console.log(item);
             let result = await fetch("http://localhost:8080/change-password", {
@@ -65,11 +66,10 @@ export default function Changepassword() {
                                 required=""
                             />
                         </div>
-                        <button type="submit" onClick={changePass}>Change Password</button>
+                        <button type="button" onClick={changePass}>Change Password</button>
                     </form>
                 </div>
             </div>
-
         </>
 
     );

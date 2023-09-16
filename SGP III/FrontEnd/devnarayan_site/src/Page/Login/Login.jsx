@@ -24,7 +24,6 @@ export default function Login() {
         onSubmit: (values, action) => {
             console.log(values);
             action.resetForm();
-
             dispatch(loginUser(values)).then((result) => {
                 if (result.payload) {
                     navigate('/');
