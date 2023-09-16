@@ -3,15 +3,12 @@ import './cart.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartItems} from '../../feature/Cart/cartSlice'
 import SingleProduct from './SingleProduct';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
 
     const { cartItems, total } = useSelector((store) => store.cart);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getCartItems());
-    },[])
 
     const onClick = () =>{
         getCartItems();
@@ -31,7 +28,7 @@ export default function Cart() {
                 <span>SUBTOTAL</span>
                 <span>${total}</span>
             </div>
-            {<button>PROCEED TO CHECKOUT</button>}
+            {<Link to="/order"><button>PROCEED TO CHECKOUT</button></Link>}
             <span className="reset">
                 Reset Cart
             </span>

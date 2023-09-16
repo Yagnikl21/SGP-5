@@ -11,8 +11,6 @@ export default function ProductCard({ data }) {
   const { user } = useSelector(state => state.user)
   
   const UpdateCart = async () => {
-    console.log(user._id);
-    console.log(data._id);
     const apiUrl = `http://localhost:8080/cart/add/${user._id}/${data._id}`;
 
     const headers = {

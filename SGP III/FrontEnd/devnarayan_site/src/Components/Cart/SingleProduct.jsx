@@ -12,7 +12,6 @@ function SingleProduct({ item, clickHandler }) {
             try {
                 const res = await axios.get(`http://localhost:8080/icecream/ice/${item.icecream._id}`);
                 setProduct(res.data);
-                console.log(res);
             }
             catch (err) {
                 console.log(err);
@@ -21,12 +20,11 @@ function SingleProduct({ item, clickHandler }) {
         fun();
     }, [])
 
-    const img = product.image ? product.img : require("../../assets/Images/product-1.jpg");
     return (
         <div className="item">
             <div className="det">
 
-                <img src={img} alt="" />
+                <img src={product.image} alt="" />
                 <div className="details">
                     <h1>{product.name}</h1>
                     <div className="price">

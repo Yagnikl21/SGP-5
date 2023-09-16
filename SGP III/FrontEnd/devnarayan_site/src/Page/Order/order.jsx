@@ -1,6 +1,4 @@
-import React from 'react'
-import './order.scss'
-import test from '../../assets/Images/product-1.jpg'
+import './order.scss';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -8,33 +6,25 @@ import Select from '@mui/material/Select';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer'
 import Header from '../../Components/Header/Header';
-export default function order() {
+import { useSelector } from 'react-redux';
+import OrderItem from './OrderItem';
 
-    const array = [1, 2, 3, 4];
+
+export default function Order() {
+
+    const {user} = useSelector(state => state.user);
+    console.log(user,"User");
+    const { cartItems,total } = useSelector(state => state.cart);
     let count = 0;
-    const showProduct = array.map((m) => {
-        count += 1;
-        return (
-            <>
-                {count > 1 && <hr />}
-                <div className="ord-product">
-                    <img src={test} alt="Ice-ceream" />
-                    <div className="product-det">
-                        <div className="ord-product-details">
-                            <h4>Vanilla Ice-cream</h4>
-                            <p>Description and bhahaha</p>
-                        </div>
-                        <span className="price">
-                            <h5>Price</h5>
-                            <h5>Quntity</h5>
-                            <h5>Total Price</h5>
-                        </span>
-                    </div>
-                </div>
-            </>
-        )
+   
+    const showProduct = cartItems.map((m) => {
+       count+=1;
+       return (
+           <OrderItem key={m.productId} count={count} m={m}/>
+       )
     })
 
+    
     return (
         <>
             <Navbar />
@@ -50,9 +40,9 @@ export default function order() {
                     <div className="usedetails">
                         <h3>Customer</h3>
                         <br />
-                        <h5>UseName</h5>
-                        <h5>Email</h5>
-                        <h5>+919724460156</h5>
+                        <h5>{user.username}</h5>
+                        <h5>{user.email}</h5>
+                        <h5>{user.mobile_number}</h5>
                         <br />
                         <hr />
                         <br />
@@ -64,9 +54,7 @@ export default function order() {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 // value={age}
-                                label="Age"
-                            // onChange={handleChange}
-                            >
+                                label="Age">
                                 <MenuItem value={"newShreedep"}>NEW SHREEDEP</MenuItem>
                                 <MenuItem value={"nisrag"}>NISRAG</MenuItem>
                                 <MenuItem value={"prince"}>PRINCE</MenuItem>
@@ -83,7 +71,7 @@ export default function order() {
                         <br />
                         <span className='d-flex justify-content-between'>
                             <p>Subtotal</p>
-                            <p>500.00</p>
+                            <p>{total}</p>
                         </span>
                         <span className='d-flex justify-content-between'>
                             <p>Tax</p>
@@ -92,7 +80,7 @@ export default function order() {
                         <hr />
                         <span className='d-flex justify-content-between'>
                             <p>Total</p>
-                            <p>500.00</p>
+                            <p>{total}</p>
                         </span>
                     </div>
                 </div>

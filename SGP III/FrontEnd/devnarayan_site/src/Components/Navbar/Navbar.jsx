@@ -1,21 +1,70 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navbar.scss'
-import { NavLink } from 'react-router-dom'
-import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import styled from '@emotion/styled';
-import { Badge } from '@mui/material';
+import { Link, NavLink } from 'react-router-dom'
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { useSelector } from 'react-redux';
+import Cart from '../Cart/cart';
+import { Avatar } from '@mui/material';
+
+import Stack from '@mui/material/Stack';
+
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  console.log(name);
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children : name[0]
+  };
+}
 
 export default function Navbar() {
-  const StyledBadge = styled(Badge)(({ theme }) => ({
-    '& .MuiBadge-badge': {
-      right: -3,
-      top: 13,
-      border: `2px solid #666666`,
-      padding: '0 4px',
-    },
-  }));
+
+  const { amount } = useSelector(state => state.cart)
+  const [isOpen, setIsOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { user } = useSelector(state => state.user);
+
+  useEffect(() => {
+    // Function to update the window width in state
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+      // Close the cart when the window size changes
+      setIsOpen(false);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', updateWindowWidth);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    };
+  }, []);
+  const cartHandler = () => {
+    setIsOpen(!isOpen);
+  }
+
   return (
     <>
       <div className="container-fluid py-3 d-none d-md-block section">
@@ -89,26 +138,34 @@ export default function Navbar() {
                 <h1 className="m-0 display-4 text-primary"><span className="text-secondary">DEV</span>NARAYAN</h1>
               </NavLink>
               <div className="navbar-nav mr-auto py-0">
-                {/* <NavLink to="/servies" className="nav-item nav-link" style={({ isActive }) => ({
-                  color: isActive ? '#F195B2' : '#77777'
-                })}>Service</NavLink>
-                <NavLink to="/gallery" className="nav-item nav-link" style={({ isActive }) => ({
-                  color: isActive ? '#F195B2' : '#77777'
-                })}>Gallery</NavLink>
-                <NavLink to="/contact" className="nav-item nav-link" style={({ isActive }) => ({
-                  color: isActive ? '#F195B2' : '#77777'
-                })}>Contact</NavLink> */}
-                 <div className="cartIcon">
-                  <ShoppingCartOutlinedIcon className="Icon"/>
-                  <span>5</span> 
-                </div>
-                {/* <i class="fa-solid fa-cart-shopping"></i> */}
+                {user === null && <>
+                  <Link to="/login">Login</Link>
+                  <Link to="/singup">SingUp</Link>
+                </>}
+                {user && <>
+
+                  {user.username && <Avatar {...stringAvatar(user.username)} />}
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {user.username}
+                    </a>
+                    <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                      <li><a className="dropdown-item" href="#">LogOut</a></li>
+                    </ul>
+                  </li>
+
+                  <div className="cartIcon">
+                    <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
+                    <span>{amount}</span>
+                  </div>
+                </>
+                }
               </div>
             </div>
           </nav>
-
         </div>
       </div>
+      {isOpen && <Cart />}
     </>
   )
 }

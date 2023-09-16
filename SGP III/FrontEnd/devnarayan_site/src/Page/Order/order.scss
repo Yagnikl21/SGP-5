@@ -12,8 +12,9 @@
     .details {
         display: flex;
         justify-content: space-between;
-
         .productList {
+            max-height: 820px;
+            overflow-y: scroll;
             padding: 38px;
             background-color: #f3f6ff;
             border-radius: 28px;

@@ -13,7 +13,7 @@ router.get("/:userId", async (req, res) => {
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
-    cart.total=parseFloat(cart.total).toFixed(2);
+    cart.total = parseFloat(cart.total).toFixed(2);
 
     res.json(cart);
   } catch (err) {
@@ -35,7 +35,7 @@ router.put("/:userId/update", async (req, res) => {
 
     for (let updatedItem of updatedItems) {
       const itemIndex = cart.items.findIndex(item => item.icecream.toString() === updatedItem.icecream._id);
-      
+
       if (itemIndex !== -1) {
         // Update existing item
         const itemToUpdate = cart.items[itemIndex];
@@ -112,11 +112,10 @@ router.put("/:userId/update", async (req, res) => {
 router.put("/add/:userId/:productId", async (req, res) => {
   try {
     const userId = req.params.userId;
+    console.log(userId,"useID");
     const productId = req.params.productId;
-    console.log("Cart Api is Working");
     // Find the user's cart
     let cart = await Cart.findOne({ user: userId });
-    console.log("Stage 1")
     if (!cart) {
       // If the cart doesn't exist, create a new one
       cart = new Cart({ user: userId, items: [], total: 0 });
@@ -124,21 +123,19 @@ router.put("/add/:userId/:productId", async (req, res) => {
 
     // Find the cart item corresponding to the productId
     const cartItem = cart.items.find(item => item.icecream.toString() === productId);
-    console.log("Stage 2")
+    console.log(productId);
+    console.log(cartItem);
     if (!cartItem) {
       // If the product is not in the cart, add it with a quantity of 1
       const icecream = await Icecream.findById(productId); // Assuming Icecream model exists
-      console.log("Stage 3")
       if (!icecream) {
         return res.status(404).json({ message: "Product not found" });
       }
-      console.log("Stage 4")
       cart.items.push({ icecream: icecream._id, quantity: 1 });
     } else {
       // Increment the quantity of the cart item
       cartItem.quantity += 1;
     }
-    console.log("Stage 5")
     // Update the total of the cart
     // const updatedTotal = cart.total + cartItem.icecream.price;
     // cart.total = updatedTotal;
@@ -150,9 +147,7 @@ router.put("/add/:userId/:productId", async (req, res) => {
       }
     }
     cart.total = parseFloat(updatedTotal).toFixed(2);
-    console.log("Stage 6")
     await cart.save();
-    console.log("Stage 7")
     res.json({ message: "Product quantity incremented", cart: cart });
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
@@ -189,11 +184,11 @@ router.put("/add/:userId/:productId", async (req, res) => {
 //     } else {
 //       // Increment the quantity of the cart item
 //       cartItem.quantity -= 1;
-      
+
 //       if(cartItem.quantity===0){
 //         // Find the index of the cart item in the array
 //       const itemIndex = cart.items.findIndex(item => item.icecream.toString() === productId);
-      
+
 //       // Remove the item from the cart's items array
 //       if (itemIndex !== -1) {
 //         cart.items.splice(itemIndex, 1);
@@ -229,7 +224,7 @@ router.put("/sub/:userId/:productId", async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
     console.log("Cart Api is Working");
-    
+
     // Find the user's cart or create a new one if it doesn't exist
     let cart = await Cart.findOne({ user: userId });
     console.log("Stage 1");
@@ -245,7 +240,7 @@ router.put("/sub/:userId/:productId", async (req, res) => {
     } else {
       // Decrement the quantity of the cart item
       cartItem.quantity -= 1;
-      
+
       if (cartItem.quantity === 0) {
         // Remove the item from the cart's items array
         cart.items = cart.items.filter(item => item.icecream.toString() !== productId);
@@ -261,9 +256,9 @@ router.put("/sub/:userId/:productId", async (req, res) => {
         updatedTotal += icecream.price * item.quantity;
       }
     }
-    
+
     cart.total = updatedTotal.toFixed(2);
-    
+
     console.log("Stage 4");
     await cart.save();
     console.log("Stage 5");
