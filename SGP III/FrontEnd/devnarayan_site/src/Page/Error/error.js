@@ -5,13 +5,6 @@ import "./error.scss";
 
 function error() {
   return (
-    // <div class="container">
-    //   {/* <img class="ops" src="./assets/images/e430101033efff9a294eaafecbac846a.gif" /> */}
-    //   <br />
-    //   <h1>Page Not Found!!</h1>
-    //   <br />
-    //   <Link to="/" />
-    // </div>
     <div className="page-not-found">
       <h1>404</h1>
       <div>

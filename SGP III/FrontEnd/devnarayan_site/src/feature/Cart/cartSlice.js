@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// import { openModal } from '../modal/modalSlice';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const users = user == null ? null : user.users;
@@ -16,7 +15,6 @@ export const getCartItems = createAsyncThunk(
   'cart/getCartItems',
   async (name, thunkAPI) => {
     const url = `http://localhost:8080/cart/${users._id}`;
-    console.log("Request")
     try {
       const resp = await axios(url);
       return resp.data;
@@ -26,44 +24,6 @@ export const getCartItems = createAsyncThunk(
   }
 );
 
-const updateCart = async (prop) => {
-  const headers = {
-    // 'Authorization': 'Bearer yourAccessToken',
-    'Content-Type': 'application/json',
-  };
-
-  const body = prop;
-  try {
-    const res = await axios.post(`http://localhost:8080/cart/${users._id}/update`, body, { headers });
-    console.log(res);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-const increaseItem = async (prop) => {
-  try {
-    const res = await axios.put(`http://localhost:8080/cart/add/${users._id}/${prop}`);
-    console.log(res);
-    return res.statusCode;
-  }
-  catch (error) {
-    console.error(error);
-  }
-}
-
-const decreaseItem = async (prop) => {
-  try {
-    const res = await axios.put(`http://localhost:8080/cart/sub/${users._id}/${prop}`);
-    console.log(res);
-    return res.statusCode;
-  }
-  catch (error) {
-    console.error(error);
-  }
-}
-
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -71,30 +31,21 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cartItems = state.cartItems.filter(() => 1 === 0);
     },
-    removeItem: (state, action) => {
-      const itemId = action.payload;
-      state.cartItems = state.cartItems.filter((item) => item._id !== itemId);
-      updateCart(state.cartItems);
+    removeItem: (state, { payload }) => {
+      state.cartItems = state.cartItems.filter((item) => item.icecream._id !== payload);
     },
     increase: (state, { payload }) => {
       const cartItem = state.cartItems.find((item) => item.icecream._id === payload);
       cartItem.quantity = cartItem.quantity + 1;
-      increaseItem(payload);
     },
     decrease: (state, { payload }) => {
       const cartItem = state.cartItems.find((item) => item.icecream._id === payload);
       cartItem.quantity = cartItem.quantity - 1;
-      decreaseItem(payload);
     },
-    calculateTotals: (state) => {
-      let amount = 0;
-      let total = 0;
-      state.cartItems.forEach((item) => {
-        amount += item.amount;
-        total += item.amount * item.price;
-      });
-      state.amount = amount;
-      state.total = total;
+    updatetotal: (state, { payload }) => {
+      console.log(payload);
+      state.total = payload.total;
+      state.amount = payload.items.length;
     }
   },
 
@@ -116,7 +67,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { clearCart, removeItem, increase, decrease, calculateTotals } =
+export const { clearCart, removeItem, increase, decrease, updatetotal } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

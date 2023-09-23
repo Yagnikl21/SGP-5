@@ -6,7 +6,7 @@ import Change from "./Page/Login/Change";
 import { Route, Routes } from "react-router-dom";
 import About from "./Page/About/About";
 import Forgot from "./Page/Login/Forgot";
-import Order from "./Page/Order/Order";
+import Order from "./Page/Order/order";
 import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";

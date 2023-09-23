@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 import Cart from '../Cart/cart';
 import { Avatar } from '@mui/material';
 
-import Stack from '@mui/material/Stack';
-
 function stringToColor(string) {
   let hash = 0;
   let i;
@@ -29,7 +27,6 @@ function stringToColor(string) {
 }
 
 function stringAvatar(name) {
-  console.log(name);
   return {
     sx: {
       bgcolor: stringToColor(name),

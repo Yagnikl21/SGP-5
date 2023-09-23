@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import './cart.scss'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { increase, decrease } from '../../feature/Cart/cartSlice';
+import { increase, decrease, removeItem} from '../../feature/Cart/cartSlice';
 
-function SingleProduct({ item, clickHandler }) {
+function SingleProduct({ item, decreaseItem, increaseItem }) {
+
     const [product, setProduct] = useState({});
     const dispatch = useDispatch();
     useEffect(() => {
@@ -18,12 +19,25 @@ function SingleProduct({ item, clickHandler }) {
             }
         }
         fun();
-    }, [])
+    })
+
+    const handleIncrease = async (prop) => {
+        dispatch(increase(prop));
+        increaseItem(prop);
+    }
+    
+    const handleDeacrease = async (prop) => {
+        if (item.quantity === 1)
+            dispatch(removeItem(prop));
+        else
+            dispatch(decrease(prop));
+        decreaseItem(prop);
+    }
 
     return (
+
         <div className="item">
             <div className="det">
-
                 <img src={product.image} alt="" />
                 <div className="details">
                     <h1>{product.name}</h1>
@@ -36,10 +50,9 @@ function SingleProduct({ item, clickHandler }) {
                 </div>
             </div>
             <div className='but'>
-                <div className='button' onClick={() => dispatch(increase(product._id))}>+</div>
-                <div className='button' onClick={() => dispatch(decrease(product._id))}>-</div>
+                <div className='button' onClick={() => handleIncrease(product._id)}>+</div>
+                <div className='button' onClick={() => handleDeacrease(product._id)}>-</div>
             </div>
-
         </div>
     )
 }
