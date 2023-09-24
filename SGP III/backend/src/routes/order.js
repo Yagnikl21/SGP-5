@@ -23,6 +23,7 @@ router.post("/:userId", async (req, res) => {
       user: userId,
       cart: cart._id,
       total: cart.total,
+      hostel: req.body.hostel,
       orderPlaced: true,
       orderDelivered: false, // Set initial status to not delivered
     });

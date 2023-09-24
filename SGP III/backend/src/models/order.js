@@ -15,6 +15,10 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  hostel:{
+    type:String,
+    required: true,
+  },
   orderPlaced: {
     type: Boolean,
     default: false,
