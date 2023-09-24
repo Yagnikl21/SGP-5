@@ -22,16 +22,16 @@ function SingleProduct({ item, decreaseItem, increaseItem }) {
     })
 
     const handleIncrease = async (prop) => {
-        dispatch(increase(prop));
         increaseItem(prop);
+        dispatch(increase(prop));
     }
     
     const handleDeacrease = async (prop) => {
+        decreaseItem(prop);
         if (item.quantity === 1)
             dispatch(removeItem(prop));
         else
             dispatch(decrease(prop));
-        decreaseItem(prop);
     }
 
     return (

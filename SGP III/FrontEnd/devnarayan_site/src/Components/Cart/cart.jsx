@@ -4,6 +4,7 @@ import axios from 'axios';
 import SingleProduct from './SingleProduct';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, updatetotal } from '../../feature/Cart/cartSlice';
+import { ClipLoader } from 'react-spinners'
 import './cart.scss';
 
 export default function Cart() {
@@ -48,9 +49,9 @@ export default function Cart() {
 
     const handelCart = async () => {
         setLoading(true);
-        dispatch(clearCart);
         try {
             const res = await axios.put(`http://localhost:8080/cart/${user._id}/clear`);
+            dispatch(clearCart);
             return res;
         } catch (error) {
             console.log(error);
@@ -69,28 +70,26 @@ export default function Cart() {
             />
         )
     })
-
-
     return (
         <div className={`cart ${loading ? 'loading' : ''}`}>
-            {loading === true ? (
-                <div className="spinner-container">
-                    <div className="spinner"></div>
+
+            <>
+                <div className={`spinner-container ${loading ? '' : 'd-none'} `}>
+                    {/* <div className="spinner"> */}
+                        <ClipLoader color="#088bed" className={`${loading ? '' : 'd-none'}`}/>
+                    {/* </div> */}
                 </div>
-            ) : (
-                <>
-                    <h1>Products in your cart</h1>
-                    {showProduct}
-                    <div className="total">
-                        <span>SUBTOTAL</span>
-                        <span>${total}</span>
-                    </div>
-                    {<Link to="/order"><button>PROCEED TO CHECKOUT</button></Link>}
-                    <span className="reset" onClick={handelCart}>
-                        Reset Cart
-                    </span>
-                </>
-            )}
+                <h1>Products in your cart</h1>
+                {showProduct}
+                <div className="total">
+                    <span>SUBTOTAL</span>
+                    <span>${total}</span>
+                </div>
+                {<Link to="/order"><button>PROCEED TO CHECKOUT</button></Link>}
+                <span className="reset" onClick={handelCart}>
+                    Reset Cart
+                </span>
+            </>
         </div>
     )
 }

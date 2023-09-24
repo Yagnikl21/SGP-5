@@ -21,14 +21,18 @@ export default function Login() {
     const { values, errors, touched, handleChange, handleSubmit, handleBlur } = useFormik({
         initialValues,
         validationSchema: loginFormScheama,
-        onSubmit: (values, action) => {
+        onSubmit: async (values, action) => {
             console.log(values);
             action.resetForm();
-            dispatch(loginUser(values)).then((result) => {
-                if (result.payload) {
+            try {
+                const response = await dispatch(loginUser(values));
+                if (loginUser.fulfilled.match(response)) {
                     navigate('/');
                 }
-            })
+            } catch (error) {
+                // Handle login error
+                console.error(error);
+            }
         }
     })
 
@@ -55,7 +59,7 @@ export default function Login() {
                                 value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                style={{marginBottom: '10px'}}
+                                style={{ marginBottom: '10px' }}
                             />
                             {errors.email && touched.email ? (<p className='alert alert-danger'>{errors.email}</p>) : null}
                         </div>
@@ -69,7 +73,7 @@ export default function Login() {
                                 value={values.password}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                style={{marginBottom: '10px'}}
+                                style={{ marginBottom: '10px' }}
                             />
                             {errors.password && touched.password ? (<p className='alert alert-danger'>{errors.password}</p>) : null}
                         </div>

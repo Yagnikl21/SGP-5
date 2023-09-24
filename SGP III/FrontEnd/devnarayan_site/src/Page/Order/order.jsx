@@ -1,30 +1,44 @@
-import './order.scss';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React, { useState } from 'react';
+import OrderConfirmationModal from './OrderConfirmationModal';
 import Navbar from '../../Components/Navbar/Navbar';
-import Footer from '../../Components/Footer/Footer'
+import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
 import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
-
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import './order.scss';
 
 export default function Order() {
-
-    const {user} = useSelector(state => state.user);
-    console.log(user,"User");
-    const { cartItems,total } = useSelector(state => state.cart);
+    const { user } = useSelector(state => state.user);
+    const { cartItems, total } = useSelector(state => state.cart);
     let count = 0;
-   
-    const showProduct = cartItems.map((m) => {
-       count+=1;
-       return (
-           <OrderItem key={m.productId} count={count} m={m}/>
-       )
-    })
 
-    
+    const showProduct = cartItems.map((m) => {
+        count += 1;
+        return (
+            <OrderItem key={m.productId} count={count} m={m} />
+        );
+    });
+
+    const [address, setAddress] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddressSelected, setIsAddressSelected] = useState(false);
+    const [isOrderMessageVisible, setIsOrderMessageVisible] = useState(false);
+
+    const handleChange = (e) => {
+        setAddress(e);
+        setIsAddressSelected(true);
+    };
+
+    const handleClick = () => {
+        if (isAddressSelected) {
+            console.log("Opening the modal");
+            setIsModalOpen(true);
+        } else {
+            setIsOrderMessageVisible(true);
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -53,8 +67,9 @@ export default function Order() {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                // value={age}
-                                label="Age">
+                                label="Address"
+                                onChange={(e) => handleChange(e.target.value)}
+                            >
                                 <MenuItem value={"newShreedep"}>NEW SHREEDEP</MenuItem>
                                 <MenuItem value={"nisrag"}>NISRAG</MenuItem>
                                 <MenuItem value={"prince"}>PRINCE</MenuItem>
@@ -63,6 +78,9 @@ export default function Order() {
                                 <MenuItem value={"girls'sHostel"}>GIRL'S HOSTEL(CHARUSAT CAMPUS)</MenuItem>
                             </Select>
                         </FormControl>
+                        {isOrderMessageVisible && !isAddressSelected && (
+                            <p style={{ color: 'red' }}>Please select an address before confirming the order.</p>
+                        )}
                         <br />
                         <br />
                         <hr />
@@ -82,10 +100,28 @@ export default function Order() {
                             <p>Total</p>
                             <p>{total}</p>
                         </span>
+                        <span>
+                            <button className='btn btn-primary' onClick={handleClick}>Confirm Order</button>
+                        </span>
+                        
                     </div>
                 </div>
             </div>
             <Footer />
+
+            {/* Render the OrderConfirmationModal component */}
+            <OrderConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={() => {
+                    // Add your logic to confirm the order here
+                    // For example, you can make an API request to place the order
+                    // and then update the UI accordingly
+                    // Once the order is confirmed, you can close the modal using setIsModalOpen(false)
+                    console.log("Order is confirmed");
+                    setIsModalOpen(false);
+                }}
+            />
         </>
     )
 }
