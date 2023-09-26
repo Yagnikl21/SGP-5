@@ -134,7 +134,7 @@ export default function Navbar() {
               <NavLink to="/" className="navbar-brand mx-5 d-none d-lg-block">
                 <h1 className="m-0 display-4 text-primary"><span className="text-secondary">DEV</span>NARAYAN</h1>
               </NavLink>
-              <div className="navbar-nav mr-auto py-0">
+              <div className="navbar-nav mr-auto py-0 login-nav">
                 {user === null && <>
                   <Link to="/login">Login</Link>
                   <Link to="/singup">SingUp</Link>
@@ -142,7 +142,7 @@ export default function Navbar() {
                 {user && <>
 
                   {user.username && <Avatar {...stringAvatar(user.username)} />}
-                  <li className="nav-item dropdown">
+                  <li className="nav-item dropdown ">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       {user.username}
                     </a>
@@ -155,6 +155,7 @@ export default function Navbar() {
                     <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
                     <span>{amount}</span>
                   </div>
+                    <h3 className='cart-route'>Cart</h3>
                 </>
                 }
               </div>
