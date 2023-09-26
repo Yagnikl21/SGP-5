@@ -51,7 +51,7 @@ export default function Cart() {
         setLoading(true);
         try {
             const res = await axios.put(`http://localhost:8080/cart/${user._id}/clear`);
-            dispatch(clearCart);
+            dispatch(clearCart());
             return res;
         } catch (error) {
             console.log(error);
@@ -75,20 +75,20 @@ export default function Cart() {
 
             <>
                 <div className={`spinner-container ${loading ? '' : 'd-none'} `}>
-                    {/* <div className="spinner"> */}
-                        <ClipLoader color="#088bed" className={`${loading ? '' : 'd-none'}`}/>
+                    <ClipLoader color="#088bed" className={`${loading ? '' : 'd-none'}`} />
+                </div>
+                    {/* <div className={`${loading ? 'disable' : ''}`}> */}
+                        <h1>Products in your cart</h1>
+                        {showProduct}
+                        <div className="total">
+                            <span>SUBTOTAL</span>
+                            <span>${total}</span>
+                        </div>
+                        {<Link to="/order"><button>PROCEED TO CHECKOUT</button></Link>}
+                        <span className="reset" onClick={handelCart}>
+                            Reset Cart
+                        </span>
                     {/* </div> */}
-                </div>
-                <h1>Products in your cart</h1>
-                {showProduct}
-                <div className="total">
-                    <span>SUBTOTAL</span>
-                    <span>${total}</span>
-                </div>
-                {<Link to="/order"><button>PROCEED TO CHECKOUT</button></Link>}
-                <span className="reset" onClick={handelCart}>
-                    Reset Cart
-                </span>
             </>
         </div>
     )

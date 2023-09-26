@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import './order.scss';
+import axios from 'axios';
 
 export default function Order() {
     const { user } = useSelector(state => state.user);
@@ -32,12 +33,26 @@ export default function Order() {
 
     const handleClick = () => {
         if (isAddressSelected) {
-            console.log("Opening the modal");
             setIsModalOpen(true);
         } else {
             setIsOrderMessageVisible(true);
         }
     };
+
+
+    const placeOrder = async (prop) => {
+
+        const requestBody = {
+            hostel : prop
+        }
+
+        try{
+            const res = await axios.post(`http://localhost:8080/order/${user._id}`,requestBody);
+            return res;
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     return (
         <>
@@ -114,10 +129,7 @@ export default function Order() {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onConfirm={() => {
-                    // Add your logic to confirm the order here
-                    // For example, you can make an API request to place the order
-                    // and then update the UI accordingly
-                    // Once the order is confirmed, you can close the modal using setIsModalOpen(false)
+                    placeOrder(address);
                     console.log("Order is confirmed");
                     setIsModalOpen(false);
                 }}
