@@ -12,12 +12,15 @@ require("dotenv").config();
 
 
 app.use(express.json())
-app.use(
-    cors({
-        origin: "http://localhost:3000"
-        // methods: "GET,POST,PUT,DELETE",
-    })
-);
+// app.use(
+//     cors({
+//         origin: "http://localhost:3000"
+//         // methods: "GET,POST,PUT,DELETE",
+//     })
+// );
+
+app.use(cors());
+
 app.use("/", userroute);
 app.use("/icecream/", icecreamroute)
 app.use("/cart/",cartRoute);

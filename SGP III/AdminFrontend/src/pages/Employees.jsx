@@ -9,49 +9,103 @@ import {
   Inject,
   Toolbar,
 } from "@syncfusion/ej2-react-grids";
-import { employeesData, employeesGrid } from "../data/dummy";
 import { Header } from "../components";
 import axios from "axios";
 const Employees = () => {
-  
+
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   // const navigate = useNavigate()
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:8080/icecream/allice"
-    }).then((response) => {
-      console.log(response.data)
-      setData(response.data)
-    });
+    const getItems = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get("http://localhost:8080/icecream/allice")
+        setData(res.data)
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getItems();
   }, [])
-  
-  console.log(data);
+
+  const handleDelete = async (prop) => {
+    // console.log(prop , "Icream ID");
+    const flag = data.filter((item) => item._id !== prop);
+    setData(flag);
+    try {
+      const res = await axios.delete(`http://localhost:8080/icecream/dice/${prop}`)
+      console.log(res);
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const columnsToShow = [
+    { name: "_id", headerText: "ID", width: 120 },
+    { name: "name", headerText: "Name", width: 100 },
+    { name: "price", headerText: "Price", width: 100 },
+    { name: "type", headerText: "Type", width: 100 },
+    {
+      // Image column
+      name: "image",
+      headerText: "Image",
+      template: "<img src='${image}' alt='Employee' width='70px' height='70px' />",
+      width: 130,
+    },
+    {
+      // Button column
+      headerText: "",
+      template:
+        "<button class='e-btn e-flat e-primary' onClick='onButtonClick(${EmployeeID})'>Edit</button>",
+      width: 100,
+    },
+    {
+      // Button column
+      headerText: "",
+      template: (props) => (
+        <button
+          className="e-btn e-flat e-primary"
+          onClick={() => handleDelete(props._id)}
+        >
+          Delete
+        </button>
+      ),
+      width: 100,
+    },
+  ];
+
   return (
     <div className="m-2 mt-24 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="Employees" />
-      <GridComponent
-        dataSource={data}
-        allowPaging
-        allowSorting
-        toolbar={["Search"]}
-        width="auto"
-      >
-        <ColumnsDirective>
-          {data.map((item, index) => (
-            <ColumnsDirective>
+      {loading ? (
+        // Show a loading indicator while data is being fetched
+        <div>Loading...</div>
+      ) : (
+        <GridComponent
+          dataSource={data}
+          allowPaging
+          allowSorting
+          toolbar={["Search"]}
+          width="auto"
+        >
+          <ColumnsDirective>
+            {columnsToShow.map((column, index) => (
               <ColumnDirective
-                key={index.name}
-                field={item.name}
-                headerText={item.headerText}
-                width={item.width}
-              /> 
-              <button>adf</button>
-              </ColumnsDirective>
-          ))}
-        </ColumnsDirective>
-        <Inject services={[Page, Search, Toolbar, Sort]} />
-      </GridComponent>
+                key={index}
+                field={column.name}
+                headerText={column.headerText}
+                width={column.width}
+                template={column.template}
+              />
+            ))}
+          </ColumnsDirective>
+          <Inject services={[Page, Search, Toolbar, Sort]} />
+        </GridComponent>
+      )}
     </div>
   );
 };
