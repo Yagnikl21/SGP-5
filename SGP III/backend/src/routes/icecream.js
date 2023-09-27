@@ -11,7 +11,7 @@ router.post("/cice", upload.single("image"), async (req, res) => {
   try {
     const { name, price, quantity, type, keyword, like } = req.body;
     const file = req.file;
-
+    
     const newIcecreamData = {
       name: name,
       price: price,
