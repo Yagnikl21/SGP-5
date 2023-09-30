@@ -9,17 +9,20 @@ const order = require("../models/order");
 router.post("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     const cart = await Cart.findOne({ user: userId });
+    console.log(cart.items);
+    // return;cc
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
     const newOrder = new Order({
       user: userId,
-      cart: cart._id,
+      items: cart.items,
       total: cart.total,
       hostel: req.body.hostel,
       orderPlaced: true,
@@ -29,32 +32,31 @@ router.post("/:userId", async (req, res) => {
     await newOrder.save();
     res.status(201).json({ message: "Order placed successfully", order: newOrder });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Server Error" });
   }
 });
 
 // Route to get all orders
-async function getCart(userId){
+async function getCart(userId) {
   const cart = await Cart.findOne({ user: userId }).populate("items.icecream", "name price");
   return cart;
 }
-async function getUser(userId){
+async function getUser(userId) {
   const user = await User.findById(userId);
 }
 router.get("/getAllOrders", async (req, res) => {
   try {
     const orders = await order.find();
-    orders.forEach(async element => {
-      console.log(element.user._id);
-      const userId = element.user._id;
-      const cart = await getCart(userId);
-      const us = cart.user;
-      const user = await getUser(us);
-      element["cart"] = cart;
-      element["user"] = 
-      console.log(element);
-    });
-    return;
+    const ordersWithUserData = [];
+    for (const element of orders) {
+      const userId = element.user;
+      const userData = await User.findById(userId);
+      const orderWithUserData = { ...element, userData: userData };
+      ordersWithUserData.push(orderWithUserData);
+    }
+    console.log(ordersWithUserData);
+    res.status(200).json({ message: "Orders Fetched Succesfully", orders: ordersWithUserData });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server Error" });
@@ -63,29 +65,29 @@ router.get("/getAllOrders", async (req, res) => {
 
 // Route to update the orderPlaced field when the order is placed
 router.put("/:orderId", async (req, res) => {
-    try {
-      const orderId = req.params.orderId;
-      const order = await Order.findById(orderId);
-      if (!order) {
-        return res.status(404).json({ message: "Order not found" });
-      }
-      // Update the orderPlaced field to true
-      order.orderDelivered = true;
-      order.total=parseFloat(order.total).toFixed(2);
-      await order.save();
-      const userId = order.user; 
-      const cart = await Cart.findOne({ user: userId });
-      console.log(cart);
-      if (cart) {
-        cart.items = [];
-        cart.total = 0;
-        console.log("Cart cleared");
-        await cart.save();
-      }
-      res.json({ message: "Order marked as Delivered", order: order });
-    } catch (err) {
-      res.status(500).json({ message: "Server Error" });
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
     }
-  });
+    // Update the orderPlaced field to true
+    order.orderDelivered = true;
+    order.total = parseFloat(order.total).toFixed(2);
+    await order.save();
+    const userId = order.user;
+    const cart = await Cart.findOne({ user: userId });
+    console.log(cart);
+    if (cart) {
+      cart.items = [];
+      cart.total = 0;
+      console.log("Cart cleared");
+      await cart.save();
+    }
+    res.json({ message: "Order marked as Delivered", order: order });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 module.exports = router;
