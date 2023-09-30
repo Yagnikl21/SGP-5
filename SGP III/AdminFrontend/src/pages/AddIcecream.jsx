@@ -164,6 +164,7 @@ const AddIcecream = () => {
                             <div className="image-preview">
                                 {product.images.map((image, index) => (
                                     <div key={index} className="image-upload">
+                                         {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
                                         <img
                                             src={image.data}
                                             alt={`Image ${index}`}

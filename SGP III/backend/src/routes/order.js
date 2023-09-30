@@ -36,6 +36,7 @@ router.post("/:userId", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+
 // Route to get all orders
 async function getCart(userId) {
   const cart = await Cart.findOne({ user: userId }).populate("items.icecream", "name price");
