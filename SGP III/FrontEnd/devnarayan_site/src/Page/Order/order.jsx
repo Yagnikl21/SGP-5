@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import OrderConfirmationModal from './OrderConfirmationModal';
+import PriceModal from './PriceModal';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
@@ -25,6 +26,7 @@ export default function Order() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAddressSelected, setIsAddressSelected] = useState(false);
     const [isOrderMessageVisible, setIsOrderMessageVisible] = useState(false);
+    const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
 
     const handleChange = (e) => {
         setAddress(e);
@@ -33,7 +35,10 @@ export default function Order() {
 
     const handleClick = () => {
         if (isAddressSelected) {
-            setIsModalOpen(true);
+            if (total < 200)
+                setIsPriceModalOpen(true);
+            else
+                setIsModalOpen(true);
         } else {
             setIsOrderMessageVisible(true);
         }
@@ -43,13 +48,13 @@ export default function Order() {
     const placeOrder = async (prop) => {
 
         const requestBody = {
-            hostel : prop
+            hostel: prop
         }
 
-        try{
-            const res = await axios.post(`http://localhost:8080/order/${user._id}`,requestBody);
+        try {
+            const res = await axios.post(`http://localhost:8080/order/${user._id}`, requestBody);
             return res;
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
@@ -118,7 +123,7 @@ export default function Order() {
                         <span>
                             <button className='btn btn-primary' onClick={handleClick}>Confirm Order</button>
                         </span>
-                        
+
                     </div>
                 </div>
             </div>
@@ -131,6 +136,14 @@ export default function Order() {
                 onConfirm={() => {
                     placeOrder(address);
                     console.log("Order is confirmed");
+                    setIsModalOpen(false);
+                }}
+            />
+
+            <PriceModal
+                isOpen={isPriceModalOpen}
+                onClose={() => setIsPriceModalOpen(false)}
+                onConfirm={() => {
                     setIsModalOpen(false);
                 }}
             />

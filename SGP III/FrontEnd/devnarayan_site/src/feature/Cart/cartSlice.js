@@ -30,6 +30,7 @@ const cartSlice = createSlice({
   reducers: {
     clearCart: (state) => {
       state.cartItems = state.cartItems.filter(() => 1 === 0);
+      state.amount = 0;
     },
     removeItem: (state, { payload }) => {
       state.cartItems = state.cartItems.filter((item) => item.icecream._id !== payload);

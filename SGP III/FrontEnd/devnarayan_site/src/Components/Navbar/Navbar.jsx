@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import './Navbar.scss'
 import { Link, NavLink } from 'react-router-dom'
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cart from '../Cart/cart';
 import { Avatar } from '@mui/material';
+import { logOut } from '../../feature/User/userSlice';
 
 function stringToColor(string) {
   let hash = 0;
@@ -41,6 +42,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Function to update the window width in state
@@ -62,6 +64,11 @@ export default function Navbar() {
     setIsOpen(!isOpen);
   }
 
+
+  const handleLogOut = () => {
+      dispatch(logOut());
+      localStorage.removeItem('user');
+  }
   return (
     <>
       <div className="container-fluid py-3 d-none d-md-block section">
@@ -147,7 +154,7 @@ export default function Navbar() {
                       {user.username}
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a className="dropdown-item" href="#">LogOut</a></li>
+                      <li><p className="dropdown-item" style={{margin:0}} onClick={handleLogOut}>LogOut</p></li>
                     </ul>
                   </li>
 
@@ -155,7 +162,7 @@ export default function Navbar() {
                     <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
                     <span>{amount}</span>
                   </div>
-                    <h3 className='cart-route'>Cart</h3>
+                    {/* <h3 className='cart-route'>Cart</h3> */}
                 </>
                 }
               </div>

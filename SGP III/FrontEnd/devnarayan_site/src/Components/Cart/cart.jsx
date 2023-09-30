@@ -49,9 +49,10 @@ export default function Cart() {
 
     const handelCart = async () => {
         setLoading(true);
+        dispatch(clearCart());
         try {
-            const res = await axios.put(`http://localhost:8080/cart/${user._id}/clear`);
-            dispatch(clearCart());
+            const res = await axios.put(`http://localhost:8080/cart/${users._id}/clear`);
+            dispatch(updatetotal(res.data.cart));
             return res;
         } catch (error) {
             console.log(error);
