@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.11",
     "@syncfusion/ej2": "^19.4.48",
     "@syncfusion/ej2-react-calendars": "^19.4.48",
     "@syncfusion/ej2-react-charts": "^19.4.50",
@@ -21,7 +24,7 @@
     "react-scripts": "5.0.0"
   },
   "scripts": {
-    "sass" : "sass src/Sass:src/Css --watch --no-source-map",
+    "sass": "sass src/Sass:src/Css --watch --no-source-map",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
