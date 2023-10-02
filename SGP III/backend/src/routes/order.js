@@ -27,6 +27,7 @@ router.post("/:userId", async (req, res) => {
       hostel: req.body.hostel,
       orderPlaced: true,
       orderDelivered: false, // Set initial status to not delivered
+      outForDelivery: false,
     });
     newOrder.total = parseFloat(newOrder.total).toFixed(2)
     await newOrder.save();
@@ -62,6 +63,22 @@ router.get("/getAllOrders", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 })
+
+router.put("/outForDelivery/:orderId" ,async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    // Update the outForDelivery field to true
+    order.outForDelivery = true;
+    await order.save();
+    res.json({ message: "Order marked as Out for Delivery", order: order });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 // Route to update the orderPlaced field when the order is placed
 router.put("/:orderId", async (req, res) => {
