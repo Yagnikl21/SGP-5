@@ -1,5 +1,5 @@
 const express = require("express");
-
+const auth= require("../middleware/auth")
 const router = express.Router()
 const User = require("../models/user")
 const Cart = require("../models/cart")
@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 const app = express();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+// const ensureAuth = require("../middleware/auth");
 app.use(express.json());
 const port = process.env.PORT || 8080;
 
@@ -44,7 +45,6 @@ const sentResetPasswordMail = async (name, email, token) => {
     }
 
 }
-
 router.post("/signup", async (req, res) => {
     try {
         console.log("Stage");
@@ -67,6 +67,8 @@ router.post("/signup", async (req, res) => {
             res.status(400).json({ message: "UserName Already Exist" });
             return;
         }
+        console.log(req.body);
+        // return;
         const encryptedPassword = await bcrypt.hash(req.body.password, 10);
         console.log("Encrypted Password")
         newUser.password = encryptedPassword;
@@ -83,9 +85,7 @@ router.post("/signup", async (req, res) => {
         res.status(400).json({ message: "Error in user registration" });
     }
 });
-
 router.post("/login", async (req, res) => {
-    console.log("call");
     const { email, password } = req.body;
     try {
         const existingUser = await User.findOne({ email: email });
@@ -96,12 +96,20 @@ router.post("/login", async (req, res) => {
         if (!isMatchedPassword) {
             return res.status(400).json({ message: "Invalid Credential" });
         }
-        const token = jwt.sign({ email: existingUser.email }, "KLklwerklLKJekrjwlkjSDA", { expiresIn: 5 })
+        const token = jwt.sign({ email: existingUser.email }, "KLklwerklLKJekrjwlkjSDA", { expiresIn: 500000000 })
         res.status(201).json({ users: existingUser, token: token });
-
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Something Went Wrong" })
+    }
+})
+
+router.post("/TESTAPI" , auth , async(req,res)=>{
+    try {
+        res.status(200).send({message:"Test Api"})
+    } catch (error) {
+        res.status(404).send({message:"Server Error"})
+        
     }
 })
 

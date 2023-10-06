@@ -107,4 +107,16 @@ router.put("/:orderId", async (req, res) => {
   }
 });
 
+// Route to get order By userId
+router.get("/getOrderById/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const ordersss = await order.find({user: userId});
+    res.status(200).json({ message: "Orders Fetched Succesfully By UserId", orders: ordersss });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 module.exports = router;
