@@ -6,7 +6,6 @@ const Icecream = require("../models/icecream")
 const upload = multer({ storage: storage });
 
 //create ice cream
-
 router.post("/cice", upload.single("image"), async (req, res) => {
   try {
     const { name, price, quantity, type, keyword, like } = req.body;
@@ -30,15 +29,12 @@ router.post("/cice", upload.single("image"), async (req, res) => {
     newIcecreamData.price=parseFloat(newIcecreamData.price).toFixed(2);
     const newIcecream = new Icecream(newIcecreamData);
     const savedIcecream = await newIcecream.save();
-
     res.status(201).json(savedIcecream);
   } catch (err) {
     console.log(err);
     res.status(500).json({ err });
   }
 });
-
-
 
 // Retrieve all ice cream objects
 
