@@ -4,13 +4,12 @@ import './OrderDetails.scss';
 
 function OrderItem({ count, m }) {
     const [product , setProduct ] = useState({});
-    console.log(m);
     useEffect(()=>{
         const getProduct = async (m) => {
             try {
                 const res = await axios.get(`http://localhost:8080/icecream/ice/${m.icecream}`);
                 setProduct(res.data);
-                console.log(res.data);
+                // console.log(res.data);
                 return res.data;
             } catch (err) {
                 console.log(err)

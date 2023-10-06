@@ -14,6 +14,7 @@ import axios from "axios";
 const Employees = () => {
 
   const [loading, setLoading] = useState(false);
+  const [oLoading, setOLoading] = useState(false);
   const [data, setData] = useState([]);
   // const navigate = useNavigate()
   useEffect(() => {
@@ -36,11 +37,14 @@ const Employees = () => {
     const flag = data.filter((item) => item._id !== prop);
     setData(flag);
     try {
+      setOLoading(true);
       const res = await axios.delete(`http://localhost:8080/icecream/dice/${prop}`)
       console.log(res);
       return res;
     } catch (err) {
       console.error(err);
+    } finally {
+      setOLoading(false);
     }
   }
 
@@ -85,26 +89,34 @@ const Employees = () => {
         // Show a loading indicator while data is being fetched
         <div>Loading...</div>
       ) : (
-        <GridComponent
-          dataSource={data}
-          allowPaging
-          allowSorting
-          toolbar={["Search"]}
-          width="auto"
-        >
-          <ColumnsDirective>
-            {columnsToShow.map((column, index) => (
-              <ColumnDirective
-                key={index}
-                field={column.name}
-                headerText={column.headerText}
-                width={column.width}
-                template={column.template}
-              />
-            ))}
-          </ColumnsDirective>
-          <Inject services={[Page, Search, Toolbar, Sort]} />
-        </GridComponent>
+        <>
+          {oLoading && (
+            // Loading overlay
+            <div className="loading-overlay">
+              <div className="spinner"></div>
+            </div>
+          )}
+          <GridComponent
+            dataSource={data}
+            allowPaging
+            allowSorting
+            toolbar={["Search"]}
+            width="auto"
+          >
+            <ColumnsDirective>
+              {columnsToShow.map((column, index) => (
+                <ColumnDirective
+                  key={index}
+                  field={column.name}
+                  headerText={column.headerText}
+                  width={column.width}
+                  template={column.template}
+                />
+              ))}
+            </ColumnsDirective>
+            <Inject services={[Page, Search, Toolbar, Sort]} />
+          </GridComponent>
+        </>
       )}
     </div>
   );

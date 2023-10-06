@@ -90,6 +90,7 @@ router.put("/:orderId", async (req, res) => {
     }
     // Update the orderPlaced field to true
     order.orderDelivered = true;
+    order.orderPlaced = false;
     order.total = parseFloat(order.total).toFixed(2);
     await order.save();
     const userId = order.user;
