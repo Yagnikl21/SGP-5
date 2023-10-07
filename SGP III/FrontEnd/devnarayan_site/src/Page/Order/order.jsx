@@ -4,15 +4,17 @@ import PriceModal from './PriceModal';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import './order.scss';
 import axios from 'axios';
+import { clearCart, updatetotal } from '../../feature/Cart/cartSlice';
 
 export default function Order() {
     const { user } = useSelector(state => state.user);
     const { cartItems, total } = useSelector(state => state.cart);
+    const dispatch = useDispatch();
     let count = 0;
 
     const showProduct = cartItems.map((m) => {
@@ -53,6 +55,12 @@ export default function Order() {
 
         try {
             const res = await axios.post(`http://localhost:8080/order/${user._id}`, requestBody);
+            dispatch(clearCart());
+            const obj = {
+                total : 0,
+                items : []
+            }
+            dispatch(updatetotal(obj));
             return res;
         } catch (err) {
             console.log(err);
