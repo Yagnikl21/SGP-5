@@ -66,8 +66,8 @@ export default function Navbar() {
 
 
   const handleLogOut = () => {
-      dispatch(logOut());
-      localStorage.removeItem('user');
+    dispatch(logOut());
+    localStorage.removeItem('user');
   }
   return (
     <>
@@ -143,12 +143,8 @@ export default function Navbar() {
               </NavLink>
               <div className="navbar-nav mr-auto py-0 login-nav">
                 {user === null && <>
-                  <NavLink to="/login" className="nav-item nav-link" style={({ isActive }) => ({
-                    color: isActive ? '#F195B2' : '#77777'
-                  })}>login</NavLink>
-                  <NavLink to="/signup" className="nav-item nav-link" style={({ isActive }) => ({
-                    color: isActive ? '#F195B2' : '#77777'
-                  })}>Signup</NavLink>
+                  <Link to="/login">Login</Link>
+                  <Link to="/singup">SingUp</Link>
                 </>}
                 {user && <>
 
@@ -158,7 +154,8 @@ export default function Navbar() {
                       {user.username}
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><p className="dropdown-item" style={{margin:0}} onClick={handleLogOut}>LogOut</p></li>
+                      <li><p className="dropdown-item" style={{ margin: 0 }} onClick={handleLogOut}>LogOut</p></li>
+                      <li><Link className="dropdown-item" style={{ margin: 0 }} to="/myorders">My orders</Link></li>
                     </ul>
                   </li>
 
@@ -166,7 +163,7 @@ export default function Navbar() {
                     <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
                     <span>{amount}</span>
                   </div>
-                    {/* <h3 className='cart-route'>Cart</h3> */}
+                  {/* <h3 className='cart-route'>Cart</h3> */}
                 </>
                 }
               </div>
