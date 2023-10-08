@@ -21,17 +21,21 @@ export default function Login() {
     const { values, errors, touched, handleChange, handleSubmit, handleBlur } = useFormik({
         initialValues,
         validationSchema: loginFormScheama,
-        onSubmit: (values, action) => {
+        onSubmit: async (values, action) => {
             console.log(values);
             action.resetForm();
-
-            dispatch(loginUser(values)).then((result) => {
-                if (result.payload) {
+            try {
+                const response = await dispatch(loginUser(values));
+                if (loginUser.fulfilled.match(response)) {
                     navigate('/');
                 }
-            });
+            } catch (error) {
+                // Handle login error
+                console.error(error);
+            }
         }
     });
+
 
     const [showPassword, setShowPassword] = useState(false);
 

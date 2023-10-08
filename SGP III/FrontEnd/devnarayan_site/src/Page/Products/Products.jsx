@@ -86,7 +86,7 @@ export default function Products() {
                                     width={80}
                                     color="#f94fee"
                                     wrapperStyle={{}}
-                                    wrapperClass=""
+                                    wrapperclassName=""
                                     visible={true}
                                     ariaLabel='oval-loading'
                                     secondaryColor="#f94fee"

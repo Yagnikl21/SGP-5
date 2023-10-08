@@ -268,4 +268,28 @@ router.put("/sub/:userId/:productId", async (req, res) => {
   }
 });
 
+//for Clear cart
+router.put('/:userId/clear', async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      // If the cart doesn't exist, you can consider it already cleared
+      return res.status(200).json({ message: "Cart is already empty", cart: cart });
+    }
+
+    // Clear the cart by setting items to an empty array and total to 0
+    cart.items = [];
+    cart.total = 0;
+
+    // Save the updated cart
+    await cart.save();
+
+    res.status(200).json({ message: "Cart successfully cleared", cart: cart });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
+
 module.exports = router;

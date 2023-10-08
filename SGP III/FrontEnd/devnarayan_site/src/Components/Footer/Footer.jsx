@@ -2,7 +2,7 @@ import React from 'react'
 import './Footer.scss'
 export default function Footer() {
   return (
-    <div classNameName='footer'>
+    <div className='footer'>
        <div className="container-fluid footer bg-light py-5" >
         <div className="container text-center py-5">
             <div className="row">

@@ -25,7 +25,7 @@ export default function Product() {
 
     const ShowProduct = product.map((p) => {
         return (
-            <ProductCard data={p} />
+            <ProductCard data={p} key={p._id}/>
         )
     })
 

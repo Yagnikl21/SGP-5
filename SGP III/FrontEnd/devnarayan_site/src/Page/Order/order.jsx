@@ -1,30 +1,64 @@
-import './order.scss';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React, { useState } from 'react';
+import OrderConfirmationModal from './OrderConfirmationModal';
+import PriceModal from './PriceModal';
 import Navbar from '../../Components/Navbar/Navbar';
-import Footer from '../../Components/Footer/Footer'
+import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
 import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
-
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import './order.scss';
+import axios from 'axios';
 
 export default function Order() {
-
-    const {user} = useSelector(state => state.user);
-    console.log(user,"User");
-    const { cartItems,total } = useSelector(state => state.cart);
+    const { user } = useSelector(state => state.user);
+    const { cartItems, total } = useSelector(state => state.cart);
     let count = 0;
-   
-    const showProduct = cartItems.map((m) => {
-       count+=1;
-       return (
-           <OrderItem key={m.productId} count={count} m={m}/>
-       )
-    })
 
-    
+    const showProduct = cartItems.map((m) => {
+        count += 1;
+        return (
+            <OrderItem key={m.productId} count={count} m={m} />
+        );
+    });
+
+    const [address, setAddress] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddressSelected, setIsAddressSelected] = useState(false);
+    const [isOrderMessageVisible, setIsOrderMessageVisible] = useState(false);
+    const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+
+    const handleChange = (e) => {
+        setAddress(e);
+        setIsAddressSelected(true);
+    };
+
+    const handleClick = () => {
+        if (isAddressSelected) {
+            if (total < 200)
+                setIsPriceModalOpen(true);
+            else
+                setIsModalOpen(true);
+        } else {
+            setIsOrderMessageVisible(true);
+        }
+    };
+
+
+    const placeOrder = async (prop) => {
+
+        const requestBody = {
+            hostel: prop
+        }
+
+        try {
+            const res = await axios.post(`http://localhost:8080/order/${user._id}`, requestBody);
+            return res;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <>
             <Navbar />
@@ -53,8 +87,9 @@ export default function Order() {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                // value={age}
-                                label="Age">
+                                label="Address"
+                                onChange={(e) => handleChange(e.target.value)}
+                            >
                                 <MenuItem value={"newShreedep"}>NEW SHREEDEP</MenuItem>
                                 <MenuItem value={"nisrag"}>NISRAG</MenuItem>
                                 <MenuItem value={"prince"}>PRINCE</MenuItem>
@@ -63,6 +98,9 @@ export default function Order() {
                                 <MenuItem value={"girls'sHostel"}>GIRL'S HOSTEL(CHARUSAT CAMPUS)</MenuItem>
                             </Select>
                         </FormControl>
+                        {isOrderMessageVisible && !isAddressSelected && (
+                            <p style={{ color: 'red' }}>Please select an address before confirming the order.</p>
+                        )}
                         <br />
                         <br />
                         <hr />
@@ -82,10 +120,33 @@ export default function Order() {
                             <p>Total</p>
                             <p>{total}</p>
                         </span>
+                        <span>
+                            <button className='btn btn-primary' onClick={handleClick}>Confirm Order</button>
+                        </span>
+
                     </div>
                 </div>
             </div>
             <Footer />
+
+            {/* Render the OrderConfirmationModal component */}
+            <OrderConfirmationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={() => {
+                    placeOrder(address);
+                    console.log("Order is confirmed");
+                    setIsModalOpen(false);
+                }}
+            />
+
+            <PriceModal
+                isOpen={isPriceModalOpen}
+                onClose={() => setIsPriceModalOpen(false)}
+                onConfirm={() => {
+                    setIsModalOpen(false);
+                }}
+            />
         </>
     )
 }

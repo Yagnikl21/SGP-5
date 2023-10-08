@@ -6,13 +6,26 @@ const orderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  cart: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Cart",
-    required: true,
-  },
+  items: [
+    {
+      icecream: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Icecream",
+        required: true
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 1
+      }
+    }
+  ],
   total: {
     type: Number,
+    required: true,
+  },
+  hostel: {
+    type: String,
     required: true,
   },
   orderPlaced: {
@@ -20,6 +33,10 @@ const orderSchema = new mongoose.Schema({
     default: false,
   },
   orderDelivered: {
+    type: Boolean,
+    default: false,
+  },
+  outForDelivery: {
     type: Boolean,
     default: false,
   },

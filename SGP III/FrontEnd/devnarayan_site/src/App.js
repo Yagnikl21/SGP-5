@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Home from "./Page/Home/Home";
 import Login from "./Page/Login/Login";
 import Signup from "./Page/Login/Signup";
@@ -13,8 +13,18 @@ import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";
 import Cart from "./Components/Cart/cart";
 import Changepassword from "./Page/Login/Changepassword";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "./feature/Cart/cartSlice";
 
 function App() {
+  const { user } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (user !== null) {
+      dispatch(getCartItems());
+    }
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Home />} />

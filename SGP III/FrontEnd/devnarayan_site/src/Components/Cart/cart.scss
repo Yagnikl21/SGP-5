@@ -2,7 +2,7 @@
   position: absolute;
   right: 140px;
   top: 133px;
-  z-index: 999;
+  z-index: 500;
   background-color: white;
   padding: 20px;
   -webkit-box-shadow: 0px 0px 7px -5px rgba(0, 0, 0, 0.5);
@@ -96,5 +96,40 @@
     color: red;
     font-size: 12px;
     cursor: pointer;
+  }
+}
+
+
+.loading {
+  min-height: auto;
+  min-width: auto;
+  position: absolute;
+  right: 140px;
+  top: 133px;
+  z-index: 1000;
+  pointer-events: none; /* Disable user interactions while loading */
+  opacity: 0.7;
+
+  .spinner-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Add your spinner styles here */
+  }
+
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }

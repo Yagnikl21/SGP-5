@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 import './Navbar.scss'
 import { Link, NavLink } from 'react-router-dom'
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cart from '../Cart/cart';
 import { Avatar } from '@mui/material';
-
-import Stack from '@mui/material/Stack';
+import { logOut } from '../../feature/User/userSlice';
 
 function stringToColor(string) {
   let hash = 0;
@@ -29,7 +28,6 @@ function stringToColor(string) {
 }
 
 function stringAvatar(name) {
-  console.log(name);
   return {
     sx: {
       bgcolor: stringToColor(name),
@@ -44,6 +42,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Function to update the window width in state
@@ -65,6 +64,11 @@ export default function Navbar() {
     setIsOpen(!isOpen);
   }
 
+
+  const handleLogOut = () => {
+      dispatch(logOut());
+      localStorage.removeItem('user');
+  }
   return (
     <>
       <div className="container-fluid py-3 d-none d-md-block section">
@@ -137,7 +141,7 @@ export default function Navbar() {
               <NavLink to="/" className="navbar-brand mx-5 d-none d-lg-block">
                 <h1 className="m-0 display-4 text-primary"><span className="text-secondary">DEV</span>NARAYAN</h1>
               </NavLink>
-              <div className="navbar-nav mr-auto py-0">
+              <div className="navbar-nav mr-auto py-0 login-nav">
                 {user === null && <>
                   <NavLink to="/login" className="nav-item nav-link" style={({ isActive }) => ({
                     color: isActive ? '#F195B2' : '#77777'
@@ -149,12 +153,12 @@ export default function Navbar() {
                 {user && <>
 
                   {user.username && <Avatar {...stringAvatar(user.username)} />}
-                  <li className="nav-item dropdown">
+                  <li className="nav-item dropdown ">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       {user.username}
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a className="dropdown-item" href="#">LogOut</a></li>
+                      <li><p className="dropdown-item" style={{margin:0}} onClick={handleLogOut}>LogOut</p></li>
                     </ul>
                   </li>
 
@@ -162,6 +166,7 @@ export default function Navbar() {
                     <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
                     <span>{amount}</span>
                   </div>
+                    {/* <h3 className='cart-route'>Cart</h3> */}
                 </>
                 }
               </div>

@@ -48,6 +48,10 @@
                 justify-content: center;
             }
         }
+
+        // .cart-route{
+        //     display: none;
+        // }
     }
 
     .navlist {
@@ -68,19 +72,22 @@
             border-radius: 0;
             box-shadow: none !important;
 
-            .navbar-nav {
+            HEAD .navbar-nav {
                 gap: 0px !important;
-            }
 
-            .cartIcon {
-                display: none;
+                .login-nav {
+                    margin-top: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 18px;
+                }
             }
         }
     }
-}
 
-.section {
-    font-weight: 600;
-    background-color: var(--primary);
-    padding-bottom: 70px !important;
+    .section {
+        font-weight: 600;
+        background-color: var(--primary);
+        padding-bottom: 70px !important;
+    }
 }
