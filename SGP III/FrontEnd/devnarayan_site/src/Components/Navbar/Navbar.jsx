@@ -34,7 +34,7 @@ function stringAvatar(name) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children : name[0]
+    children: name[0]
   };
 }
 
@@ -139,8 +139,12 @@ export default function Navbar() {
               </NavLink>
               <div className="navbar-nav mr-auto py-0">
                 {user === null && <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/singup">SingUp</Link>
+                  <NavLink to="/login" className="nav-item nav-link" style={({ isActive }) => ({
+                    color: isActive ? '#F195B2' : '#77777'
+                  })}>login</NavLink>
+                  <NavLink to="/signup" className="nav-item nav-link" style={({ isActive }) => ({
+                    color: isActive ? '#F195B2' : '#77777'
+                  })}>Signup</NavLink>
                 </>}
                 {user && <>
 

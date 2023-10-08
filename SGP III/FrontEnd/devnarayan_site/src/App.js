@@ -2,19 +2,19 @@ import React from "react";
 import Home from "./Page/Home/Home";
 import Login from "./Page/Login/Login";
 import Signup from "./Page/Login/Signup";
+
 import Change from "./Page/Login/Change";
 import { Route, Routes } from "react-router-dom";
 import About from "./Page/About/About";
 import Forgot from "./Page/Login/Forgot";
-import Order from "./Page/Order/Order";
+import Order from "./Page/Order/order";
 import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";
-import Cart from './Components/Cart/cart';
+import Cart from "./Components/Cart/cart";
 import Changepassword from "./Page/Login/Changepassword";
 
 function App() {
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -28,7 +28,7 @@ function App() {
       <Route element={<PrivateRoutes />}>
         <Route path="/order" element={<Order />} />
         <Route path="/cart" element={<Cart />} />
-      </Route >
+      </Route>
       <Route path="/Change" element={<Change />} />
       <Route path="*" element={<Error />} />
     </Routes>
