@@ -11,6 +11,7 @@ import Products from "./Page/Products/Products";
 import Error from "./Page/Error/error";
 import PrivateRoutes from "./feature/PrivateRoutes";
 import Cart from './Components/Cart/cart';
+import OrderHistory from "./Page/OrderHistory/OrderHistory";
 import Changepassword from "./Page/Login/Changepassword";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItems } from "./feature/Cart/cartSlice";
@@ -36,6 +37,7 @@ function App() {
       <Route path="/changepassword" element={<Changepassword />} />
       <Route element={<PrivateRoutes />}>
         <Route path="/order" element={<Order />} />
+        <Route path="/myorders" element={<OrderHistory />} />
         <Route path="/cart" element={<Cart />} />
       </Route >
       <Route path="/Change" element={<Change />} />

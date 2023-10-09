@@ -10,20 +10,12 @@ import {
   Orders,
   Calendar,
   Employees,
-  Stacked,
-  Pyramid,
   Customers,
   Kanban,
-  Area,
-  Bar,
-  Pie,
-  Line,
-  Financial,
   ColorPicker,
-  ColorMapping,
   Editor,
 } from "./pages";
-
+import Products from './pages/Products'
 import "./App.css";
 import AddIcecream from "./pages/AddIcecream";
 
@@ -78,7 +70,7 @@ const App = () => {
 
                 {/* Pages */}
                 <Route path="/orders" element={<Orders />} />
-                <Route path="/employees" element={<Employees />} />
+                <Route path="/products" element={<Products />} />
                 <Route path="/customers" element={<Customers />} />
                 <Route path="/AddIceCream" element={<AddIcecream />} />
                 {/* Apps */}
@@ -88,14 +80,14 @@ const App = () => {
                 <Route path="/color-picker" element={<ColorPicker />} />
 
                 {/* Charts */}
-                <Route path="/line" element={<Line />} />
+                {/* <Route path="/line" element={<Line />} />
                 <Route path="/area" element={<Area />} />
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/pie" element={<Pie />} />
                 <Route path="/financial" element={<Financial />} />
                 <Route path="/color-mapping" element={<ColorMapping />} />
                 <Route path="/pyramid" element={<Pyramid />} />
-                <Route path="/stacked" element={<Stacked />} />
+                <Route path="/stacked" element={<Stacked />} /> */}
               </Routes>
             </div>{" "}
             <Footer />

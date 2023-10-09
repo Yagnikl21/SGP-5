@@ -155,6 +155,7 @@ export default function Navbar() {
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                       <li><p className="dropdown-item" style={{margin:0}} onClick={handleLogOut}>LogOut</p></li>
+                      <li><Link className="dropdown-item" style={{margin:0}} to="/myorders">My orders</Link></li>
                     </ul>
                   </li>
 

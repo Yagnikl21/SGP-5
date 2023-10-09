@@ -1,4 +1,5 @@
 import React from "react";
+import { MdProductionQuantityLimits } from "react-icons/md";
 import {
   AiOutlineCalendar,
   AiOutlineShoppingCart,
@@ -510,15 +511,15 @@ export const employeesGrid = [
 ];
 
 export const links = [
-  {
-    title: "Dashboard",
-    links: [
-      {
-        name: "ecommerce",
-        icon: <FiShoppingBag />,
-      },
-    ],
-  },
+  // {
+  //   title: "Dashboard",
+  //   links: [
+  //     {
+  //       name: "ecommerce",
+  //       icon: <FiShoppingBag />,
+  //     },
+  //   ],
+  // },
 
   {
     title: "Pages",
@@ -528,8 +529,9 @@ export const links = [
         icon: <AiOutlineShoppingCart />,
       },
       {
-        name: "Employees",
-        icon: <IoMdContacts />,
+        name: "Products",
+        // icon: <IoMdContacts />,
+        icon: <MdProductionQuantityLimits />,
       },
       {
         name: "customers",
@@ -548,54 +550,54 @@ export const links = [
         name: "kanban",
         icon: <BsKanban />,
       },
-      {
-        name: "editor",
-        icon: <FiEdit />,
-      },
+      // {
+      //   name: "editor",
+      //   icon: <FiEdit />,
+      // },
       {
         name: "color-picker",
         icon: <BiColorFill />,
       },
     ],
   },
-  {
-    title: "Charts",
-    links: [
-      {
-        name: "line",
-        icon: <AiOutlineStock />,
-      },
-      {
-        name: "area",
-        icon: <AiOutlineAreaChart />,
-      },
+  // {
+  //   title: "Charts",
+  //   links: [
+  //     {
+  //       name: "line",
+  //       icon: <AiOutlineStock />,
+  //     },
+  //     {
+  //       name: "area",
+  //       icon: <AiOutlineAreaChart />,
+  //     },
 
-      {
-        name: "bar",
-        icon: <AiOutlineBarChart />,
-      },
-      {
-        name: "pie",
-        icon: <FiPieChart />,
-      },
-      {
-        name: "financial",
-        icon: <RiStockLine />,
-      },
-      {
-        name: "color-mapping",
-        icon: <BsBarChart />,
-      },
-      {
-        name: "pyramid",
-        icon: <GiLouvrePyramid />,
-      },
-      {
-        name: "stacked",
-        icon: <AiOutlineBarChart />,
-      },
-    ],
-  },
+  //     {
+  //       name: "bar",
+  //       icon: <AiOutlineBarChart />,
+  //     },
+  //     {
+  //       name: "pie",
+  //       icon: <FiPieChart />,
+  //     },
+  //     {
+  //       name: "financial",
+  //       icon: <RiStockLine />,
+  //     },
+  //     {
+  //       name: "color-mapping",
+  //       icon: <BsBarChart />,
+  //     },
+  //     {
+  //       name: "pyramid",
+  //       icon: <GiLouvrePyramid />,
+  //     },
+  //     {
+  //       name: "stacked",
+  //       icon: <AiOutlineBarChart />,
+  //     },
+  //   ],
+  // },
 ];
 
 export const cartData = [
