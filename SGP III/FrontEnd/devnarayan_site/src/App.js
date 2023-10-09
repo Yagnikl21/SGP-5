@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Home from "./Page/Home/Home";
 import Login from "./Page/Login/Login";
 import Signup from "./Page/Login/Signup";
+
 import Change from "./Page/Login/Change";
 import { Route, Routes } from "react-router-dom";
 import About from "./Page/About/About";
@@ -17,14 +18,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCartItems } from "./feature/Cart/cartSlice";
 
 function App() {
-  const { user } = useSelector(state => state.user);
+  const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (user !== null) {
       dispatch(getCartItems());
     }
-  }, [])
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -39,7 +40,7 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/myorders" element={<OrderHistory />} />
         <Route path="/cart" element={<Cart />} />
-      </Route >
+      </Route>
       <Route path="/Change" element={<Change />} />
       <Route path="*" element={<Error />} />
     </Routes>

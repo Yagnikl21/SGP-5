@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import './Login.scss';
 import Img from '../Login/logo.png';
@@ -12,7 +13,6 @@ const initialValues = {
 }
 
 export default function Login() {
-
     const { loading, error } = useSelector((state) => state.user);
 
     const navigate = useNavigate();
@@ -34,7 +34,10 @@ export default function Login() {
                 console.error(error);
             }
         }
-    })
+    });
+
+
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <>
@@ -68,7 +71,7 @@ export default function Login() {
                             <input
                                 placeholder="Enter Password"
                                 id="passwordForm"
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 name="password"
                                 value={values.password}
                                 onChange={handleChange}
@@ -77,10 +80,16 @@ export default function Login() {
                             />
                             {errors.password && touched.password ? (<p className='alert alert-danger'>{errors.password}</p>) : null}
                         </div>
-
+                        <label>
+                            <input
+                                type="checkbox"
+                                onChange={() => setShowPassword(!showPassword)}
+                            />
+                            Show Password
+                        </label>
                         <Link to="/Forgot">I forgot my password!</Link>
-                        <button type="submit" >{
-                            loading ? 'Loading...' : 'Sign in'}
+                        <button type="submit">
+                            {loading ? 'Loading...' : 'Sign in'}
                         </button>
                         {error && (
                             <div className='alert alert-danger' role='alert'>{error}</div>
@@ -91,8 +100,6 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-
         </>
-
     );
 }

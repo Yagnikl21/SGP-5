@@ -1,124 +1,103 @@
-// .addIcecream {
-//     border: 2px solid red;
-//     width: 500px;
+// addicecream.scss
+
+.addIcecream {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
 
-//     body {
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         min-height: 100vh;
-//         background-color: #f7f7f7;
-//         margin: 0;
-//         font-family: Arial, sans-serif;
-//     }
+    .allitem {
+        margin-bottom: 20px;
 
-//     .allitem {
-//         margin: 10px;
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-//         button {
-//             background-color: #007bff;
-//             color: #fff;
-//             border: none;
-//             padding: 5px 5px;
-//             border-radius: 5px;
-//             cursor: pointer;
-//             font-size: 15px;
-//             transition: background-color 0.3s;
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-//             &:hover {
-//                 background-color: #5bc0de;
-//             }
-//         }
+        .keyword-input-container {
+            display: flex;
+            gap: 10px;
 
-//         .keyword {
-//             display: flex;
-//             align-items: center;
-//             margin-bottom: 10px;
+            input {
+                flex: 1; // Take up remaining space
+            }
+        }
 
-//             input[type="text"] {
-//                 flex: 1;
-//                 margin-right: 10px;
-//                 padding: 10px;
-//                 border: 1px solid #ccc;
-//                 border-radius: 5px;
-//                 font-size: 16px;
-//                 color: #333;
-//             }
+        button {
+            background: linear-gradient(#007bff, #0056b3);
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            width: 100%;
 
-//             button {
-//                 background-color: red;
-//                 color: #fff;
-//                 border: none;
-//                 padding: 8px 16px;
-//                 border-radius: 5px;
-//                 cursor: pointer;
-//                 font-size: 16px;
-//                 transition: background-color 0.3s;
+            &:hover {
+                background: linear-gradient(#0056b3, #004080);
+                transform: scale(1.05);
+            }
+        }
 
-//                 &:hover {
-//                     background-color: darken(red, 10%);
-//                 }
-//             }
+        button.add-keyword {
+            background: linear-gradient(#28a745, #218838);
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
 
-//         }
-//     }
+            &:hover {
+                background: linear-gradient(#218838, #1e7e34);
+                transform: scale(1.05);
+            }
+        }
 
-//     // Container for the form
-//     .form-box {
-//         background-color: #fff;
-//         border: 2px solid #ccc;
-//         border-radius: 5px;
-//         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-//         padding: 20px;
-//         width: 80%; // Adjust the width as needed
-//         text-align: center;
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
 
+            .image-upload {
+                margin-right: 10px;
+                margin-bottom: 10px;
 
-//         // Form element styles
-//         .form-group {
-//             margin-bottom: 20px;
+                img {
+                    max-width: 100px;
+                    margin-bottom: 5px;
+                }
 
+                button {
+                    background-color: #ff0000;
+                    color: #fff;
+                    padding: 5px;
+                    border: none;
+                    cursor: pointer;
+                }
+            }
+        }
 
-//             label {
-//                 display: block;
-//                 font-weight: bold;
-//                 margin-bottom: 5px;
-//                 color: #007bff;
-//             }
-
-//             input[type="text"],
-//             input[type="number"],
-//             input[type="file"] {
-//                 width: 100%;
-//                 padding: 12px;
-//                 border: 1px solid #ccc;
-//                 border-radius: 5px;
-//                 font-size: 16px;
-//                 color: #333;
-//             }
-
-//             input[type="file"] {
-//                 display: none;
-//             }
-
-//             .image-upload {
-//                 border: 2px dashed #ccc;
-//                 padding: 20px;
-//                 cursor: pointer;
-//                 text-align: center;
-
-//                 img {
-//                     max-width: 100px;
-//                     margin-top: 10px;
-//                 }
-
-//                 &:hover {
-//                     border-color: #007bff;
-//                 }
-//             }
-//         }
-
-
-//     }
-// }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+        }
+    }
+}

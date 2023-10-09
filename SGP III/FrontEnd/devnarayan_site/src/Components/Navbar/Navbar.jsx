@@ -32,7 +32,7 @@ function stringAvatar(name) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children : name[0]
+    children: name[0]
   };
 }
 
@@ -66,8 +66,8 @@ export default function Navbar() {
 
 
   const handleLogOut = () => {
-      dispatch(logOut());
-      localStorage.removeItem('user');
+    dispatch(logOut());
+    localStorage.removeItem('user');
   }
   return (
     <>
@@ -163,7 +163,7 @@ export default function Navbar() {
                     <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
                     <span>{amount}</span>
                   </div>
-                    {/* <h3 className='cart-route'>Cart</h3> */}
+                  {/* <h3 className='cart-route'>Cart</h3> */}
                 </>
                 }
               </div>
