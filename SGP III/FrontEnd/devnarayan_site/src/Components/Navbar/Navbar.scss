@@ -25,7 +25,10 @@
         }
 
         .login-nav {
-
+            a{
+                color : #1a1a1a;
+                text-decoration: none;
+            }
             .cartIcon {
                 position: relative;
 
@@ -81,10 +84,7 @@
                 flex-direction: row;
                 gap: 18px;
 
-                a{
-                    color : black;
-                    text-decoration: none;
-                }
+                
             }
 
             .cartIcon {
