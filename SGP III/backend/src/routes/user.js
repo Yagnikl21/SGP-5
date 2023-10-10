@@ -53,19 +53,19 @@ router.post("/signup", async (req, res) => {
         const us = await User.findOne({ email });
         if (us) {
             res.status(400).json({ message: "Email Already Exist" });
-            return;
+            return res;
         }
         const mobile_number = newUser.mobile_number;
         const u = await User.findOne({ mobile_number });
         if (u) {
             res.status(400).json({ message: "Mobile Number Already Exist" });
-            return;
+            return res;
         }
         const username = newUser.username;
         const userna = await User.findOne({ username });
         if (userna) {
             res.status(400).json({ message: "UserName Already Exist" });
-            return;
+            return res;
         }
         console.log(req.body);
         // return;

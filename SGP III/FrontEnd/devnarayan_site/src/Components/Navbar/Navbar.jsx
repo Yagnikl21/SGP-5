@@ -143,8 +143,8 @@ export default function Navbar() {
               </NavLink>
               <div className="navbar-nav mr-auto py-0 login-nav">
                 {user === null && <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/singup">SingUp</Link>
+                  <Link className='link' to="/login">Login</Link>
+                  <Link className='link' to="/Signup">SingUp</Link>
                 </>}
                 {user && <>
 

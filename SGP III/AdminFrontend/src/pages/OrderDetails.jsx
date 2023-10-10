@@ -54,6 +54,7 @@ export default function OrderDetails({ isOpen, onClose, order }) {
                         <div className="right flex flex-col ml-36 flex-1 justify-start items-start">
                             <div>Order ID : {ord._id}</div>
                             <div>Ordered By : {user.username}</div>
+                            <div>Contact No : {user.mobile_number}</div>
                             <div>Total Items : {ord.items.length}</div>
                             <div>Total Price : {ord.total}</div>
                             <div>Location : {ord.hostel}</div>
