@@ -44,6 +44,7 @@ export default function Navbar() {
   const { user } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     // Function to update the window width in state
     const updateWindowWidth = () => {
@@ -60,6 +61,7 @@ export default function Navbar() {
       window.removeEventListener('resize', updateWindowWidth);
     };
   }, []);
+
   const cartHandler = () => {
     setIsOpen(!isOpen);
   }
@@ -69,6 +71,23 @@ export default function Navbar() {
     dispatch(logOut());
     localStorage.removeItem('user');
   }
+
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (isOpen && cartRef.current && !cartRef.current.contains(event.target)) {
+  //       cartHandler();
+  //     }
+  //   };
+
+  //   if (isOpen) {
+  //     document.addEventListener('click', handleOutsideClick);
+  //   }
+
+  //   return () => {
+  //     document.removeEventListener('click', handleOutsideClick);
+  //   };
+  // }, [isOpen, cartHandler]); 
+
   return (
     <>
       <div className="container-fluid py-3 d-none d-md-block section">
@@ -118,9 +137,11 @@ export default function Navbar() {
         {/* eslint-disable-next-line */}
         <div className="container-lg position-relative p-0 px-lg-3">
           <nav className="navbar navbar-expand-lg bg-white navbar-light shadow p-lg-0">
-            <a href="index.html" className="navbar-brand d-block d-lg-none">
+            {/* <a href="index.html" > */}
+            <Link to="/" className="navbar-brand d-block d-lg-none">
               <h1 className="m-0 display-4 text-primary"><span className="text-secondary">DEV</span>NARAYAN</h1>
-            </a>
+            </Link>
+            {/* </a> */}
             <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
               <span className="navbar-toggler-icon">
 
@@ -154,8 +175,8 @@ export default function Navbar() {
                       {user.username}
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><p className="dropdown-item" style={{margin:0}} onClick={handleLogOut}>LogOut</p></li>
-                      <li><Link className="dropdown-item" style={{margin:0}} to="/myorders">My orders</Link></li>
+                      <li><p className="dropdown-item" style={{ margin: 0 }} onClick={handleLogOut}>LogOut</p></li>
+                      <li><Link className="dropdown-item" style={{ margin: 0 }} to="/myorders">My orders</Link></li>
                     </ul>
                   </li>
 
@@ -171,7 +192,9 @@ export default function Navbar() {
           </nav>
         </div>
       </div>
-      {isOpen && <Cart />}
+      {isOpen && <Cart isOpen={isOpen}
+        cartHandler={cartHandler} />
+      }
     </>
   )
 }

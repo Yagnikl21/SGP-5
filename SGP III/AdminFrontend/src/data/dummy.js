@@ -534,6 +534,11 @@ export const links = [
         icon: <MdProductionQuantityLimits />,
       },
       {
+        name: "Addproduct",
+        // icon: <IoMdContacts />,
+        icon: <MdProductionQuantityLimits />,
+      },
+      {
         name: "customers",
         icon: <RiContactsLine />,
       },

@@ -131,6 +131,12 @@
             }
         }
     }
+}
 
-
+@media (max-width: 768px) { 
+    .products{
+        .filters{
+            padding: 30px;
+        }
+    }
 }
