@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Navbar.scss'
 import { Link, NavLink } from 'react-router-dom'
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -42,8 +42,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { user } = useSelector(state => state.user);
+  // const user = user.users;
+  // console.log(user);
   const dispatch = useDispatch();
-
+  const cartRef = useRef();
 
   useEffect(() => {
     // Function to update the window width in state
@@ -169,10 +171,10 @@ export default function Navbar() {
                 </>}
                 {user && <>
 
-                  {user.username && <Avatar {...stringAvatar(user.username)} />}
+                  {user.users.username && <Avatar {...stringAvatar(user.users.username)} />}
                   <li className="nav-item dropdown ">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      {user.username}
+                      {user.users.username}
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                       <li><p className="dropdown-item" style={{ margin: 0 }} onClick={handleLogOut}>LogOut</p></li>
@@ -181,7 +183,7 @@ export default function Navbar() {
                   </li>
 
                   <div className="cartIcon">
-                    <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} />
+                    <ShoppingCartOutlinedIcon className="Icon" onClick={cartHandler} ref={cartRef}/>
                     <span>{amount}</span>
                   </div>
                   {/* <h3 className='cart-route'>Cart</h3> */}

@@ -17,6 +17,7 @@ export const getCartItems = createAsyncThunk(
     const url = `http://localhost:8080/cart/${users._id}`;
     try {
       const resp = await axios(url);
+      console.log(resp, "From cart sclice responce");
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue('something went wrong');

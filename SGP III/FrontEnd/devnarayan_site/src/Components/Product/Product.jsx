@@ -23,14 +23,14 @@ export default function Product() {
         fechData();
     }, [])
 
+    const [scrollPosition, setScrollPosition] = useState(0);
     const ShowProduct = product.map((p) => {
         return (
-            <ProductCard data={p} key={p._id}/>
+            <ProductCard data={p} key={p._id} scrollPosition={scrollPosition}/>
         )
     })
 
     const containerRef = useRef(null);
-    const [scrollPosition, setScrollPosition] = useState(0);
 
     const scrollLeft = () => {
         if (containerRef.current) {

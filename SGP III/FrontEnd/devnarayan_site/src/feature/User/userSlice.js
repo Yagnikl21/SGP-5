@@ -9,7 +9,9 @@ export const loginUser = createAsyncThunk(
       usersCredential
     );
     const response = await request.data;
+    // console.log(response);
     localStorage.setItem("user", JSON.stringify(response));
+
     return response;
   }
 );
@@ -20,7 +22,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
-    user: localUser ? localUser.users : null,
+    user: localUser ? localUser : null,
     error: null,
   },
   reducers: {

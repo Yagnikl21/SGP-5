@@ -5,14 +5,14 @@ import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { additem } from '../../feature/Cart/cartSlice';
 
-export default function ProductCard({ data }) {
+export default function ProductCard({ data,scrollPosition }) {
   const img = data.image ? data.image : require("../../assets/Images/product-1.jpg");
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.user)
+  const { user } = useSelector(state => state.user);
   const [loading, setLoading] = useState(false);
 
   const UpdateCart = async () => {
-    const apiUrl = `http://localhost:8080/cart/add/${user._id}/${data._id}`;
+    const apiUrl = `http://localhost:8080/cart/add/${user.users._id}/${data._id}`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -24,6 +24,7 @@ export default function ProductCard({ data }) {
     try {
       setLoading(true);
       const response = await axios.put(apiUrl, requestBody, { headers });
+      console.log(response, "From add cart function");
       dispatch(additem(response.data.cart));
     } catch (error) {
       console.error('Error:', error);
@@ -49,10 +50,10 @@ export default function ProductCard({ data }) {
           <div className="spinner"></div>
         </div>
       )}
-      <div className="product-item-m col-12 col-md-6 col-lg-3 py-0 px-3">
+      <div className="product-item-m col-12 col-md-6 col-lg-3 py-0 px-3" style={{ transform: `translateX(-${scrollPosition}px)` , transition: 'transform 0.6s ease'}}>
         <div className="product-item d-flex flex-column align-items-center text-center bg-white  rounded">
           <div className=" py-3 price" style={{ width: "80px" }}>
-            <h4 className="font-weight-bold text-white mb-0">${data.price}</h4>
+            <h4 className="font-weight-bold text-white mb-0">₹{data.price}</h4>
           </div>
           <div className="position-relative rounded-circle mt-n3 mb-4 p-3 image" style={{ width: "150px", height: "150px" }}>
             <img className="rounded-circle w-100 h-100" src={img} style={{ objectFit: "cover" }} alt='ImageOfIceCream' />

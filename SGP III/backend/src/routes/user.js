@@ -96,7 +96,7 @@ router.post("/login", async (req, res) => {
         if (!isMatchedPassword) {
             return res.status(400).json({ message: "Invalid Credential" });
         }
-        const token = jwt.sign({ email: existingUser.email }, "KLklwerklLKJekrjwlkjSDA", { expiresIn: 500000000 })
+        const token = jwt.sign({ email: existingUser.email }, "KLklwerklLKJekrjwlkjSDA", { expiresIn: 86400*15 })
         res.status(201).json({ users: existingUser, token: token });
     } catch (err) {
         console.log(err);

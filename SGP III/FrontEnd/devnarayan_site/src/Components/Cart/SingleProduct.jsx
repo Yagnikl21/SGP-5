@@ -10,6 +10,7 @@ function SingleProduct({ item, decreaseItem, increaseItem }) {
     const dispatch = useDispatch();
     useEffect(() => {
         const fun = async () => {
+            console.log(item);
             try {
                 const res = await axios.get(`http://localhost:8080/icecream/ice/${item.icecream._id}`);
                 setProduct(res.data);
@@ -19,7 +20,7 @@ function SingleProduct({ item, decreaseItem, increaseItem }) {
             }
         }
         fun();
-    })
+    },[item])
 
     const handleIncrease = async (prop) => {
         increaseItem(prop);
@@ -45,7 +46,7 @@ function SingleProduct({ item, decreaseItem, increaseItem }) {
                         Quantity : {item.quantity}
                     </div>
                     <div className="price">
-                        ${product.price}
+                        ₹{product.price}
                     </div>
                 </div>
             </div>

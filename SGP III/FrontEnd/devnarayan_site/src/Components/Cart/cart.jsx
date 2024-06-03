@@ -18,42 +18,7 @@ export default function Cart({ isOpen, cartHandler }) {
     const { cartItems, total } = useSelector((store) => store.cart);
 
     const dispatch = useDispatch();
-    // const cartRef = useRef();
-    // const cartRef = useRef();
-
-    // useEffect(() => {
-    //     const handleOutsideClick = (event) => {
-    //         if (isOpen && cartRef.current && !cartRef.current.contains(event.target)) {
-    //             cartHandler();
-    //         }
-    //     };
-
-    //     if (isOpen) {
-    //         document.addEventListener('click', handleOutsideClick);
-    //     }
-
-    //     return () => {
-    //         document.removeEventListener('click', handleOutsideClick);
-    //     };
-    // }, [isOpen, cartHandler]);
-    // const closeCart = () => {
-    //     setIsCartOpen(false);
-
-    // }
-
-    // useEffect(() => {
-    //     const handleOutsideClick = (event) => {
-    //         if (isCartOpen && !document.querySelector('.cart').contains(event.target)) {
-    //             closeCart();
-    //         }
-    //     };
-
-    //     document.body.addEventListener('click', handleOutsideClick);
-
-    //     return () => {
-    //         document.body.removeEventListener('click', handleOutsideClick);
-    //     };
-    // }, [isCartOpen]);
+ 
 
     const decreaseItem = async (prop) => {
         setLoading(true);
@@ -124,7 +89,7 @@ export default function Cart({ isOpen, cartHandler }) {
                 {showProduct}
                 <div className="total">
                     <span>SUBTOTAL</span>
-                    <span>${total}</span>
+                    <span>₹{total}</span>
                 </div>
                 {<Link to="/order"><button>PROCEED TO CHECKOUT</button></Link>}
                 <span className="reset" onClick={handelCart}>

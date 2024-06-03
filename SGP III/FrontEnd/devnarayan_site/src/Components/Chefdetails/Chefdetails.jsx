@@ -9,7 +9,7 @@ export default function Chefdetails() {
 
     const containerRef = useRef(null);
     const [scrollPosition, setScrollPosition] = useState(0);
-
+    const numCards = 3;
     const scrollLeft = () => {
         if (containerRef.current) {
             const cardWidth = containerRef.current.querySelector('.service-item').clientWidth;
@@ -22,9 +22,9 @@ export default function Chefdetails() {
         if (containerRef.current) {
             const cardWidth = containerRef.current.querySelector('.service-item').clientWidth;
             const containerWidth = containerRef.current.clientWidth;
-            const maxScrollPosition = containerRef.current.scrollWidth - containerWidth;
+            const maxScrollPosition = cardWidth * (numCards - 1);
             const newPosition = scrollPosition + cardWidth;
-            setScrollPosition(Math.min(maxScrollPosition, newPosition));
+            setScrollPosition(newPosition >= maxScrollPosition ? 0 : newPosition);
         }
     };
 
