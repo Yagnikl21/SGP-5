@@ -12,7 +12,7 @@ export default function ProductCard({ data,scrollPosition }) {
   const [loading, setLoading] = useState(false);
 
   const UpdateCart = async () => {
-    const apiUrl = `http://localhost:8080/cart/add/${user.users._id}/${data._id}`;
+    const apiUrl = `${process.env.REACT_APP_BASE_URL}/cart/add/${user.users._id}/${data._id}`;
 
     const headers = {
       'Content-Type': 'application/json',

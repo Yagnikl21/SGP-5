@@ -21,7 +21,7 @@ const Employees = () => {
     const getItems = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("http://localhost:8080/icecream/allice")
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/icecream/allice`)
         setData(res.data)
       } catch (err) {
         console.log(err);
@@ -38,7 +38,7 @@ const Employees = () => {
     setData(flag);
     try {
       setOLoading(true);
-      const res = await axios.delete(`http://localhost:8080/icecream/dice/${prop}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/icecream/dice/${prop}`)
       console.log(res);
       return res;
     } catch (err) {

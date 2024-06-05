@@ -14,7 +14,7 @@ const initialState = {
 export const getCartItems = createAsyncThunk(
   'cart/getCartItems',
   async (name, thunkAPI) => {
-    const url = `http://localhost:8080/cart/${users._id}`;
+    const url = `${process.env.REACT_APP_BASE_URL}/cart/${users._id}`;
     try {
       const resp = await axios(url);
       console.log(resp, "From cart sclice responce");

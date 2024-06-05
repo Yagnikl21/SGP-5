@@ -22,7 +22,7 @@ const Customers = () => {
   useEffect(() => {
     const getuser = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/getAllUser");
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/getAllUser`);
         console.log(res.data);
         setUser(res.data.users);
       } catch (error) {

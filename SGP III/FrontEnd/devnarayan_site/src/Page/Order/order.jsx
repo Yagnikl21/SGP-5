@@ -54,7 +54,7 @@ export default function Order() {
         }
 
         try {
-            const res = await axios.post(`http://localhost:8080/order/${user.users._id}`, requestBody);
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}http://localhost:8080/order/${user.users._id}`, requestBody);
             dispatch(clearCart());
             const obj = {
                 total : 0,

@@ -12,7 +12,7 @@ function SingleProduct({ item, decreaseItem, increaseItem }) {
         const fun = async () => {
             console.log(item);
             try {
-                const res = await axios.get(`http://localhost:8080/icecream/ice/${item.icecream._id}`);
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/icecream/ice/${item.icecream._id}`);
                 setProduct(res.data);
             }
             catch (err) {

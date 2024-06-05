@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 
 export default function Product() {
 
-    const URL = "http://localhost:8080/icecream/allice";
+    const URL = `${process.env.REACT_APP_BASE_URL}/icecream/allice`;
 
     const [product, setProduct] = useState([]);
     useEffect(() => {

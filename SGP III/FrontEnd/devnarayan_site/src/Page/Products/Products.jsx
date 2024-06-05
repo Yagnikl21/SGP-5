@@ -11,7 +11,7 @@ import Header from '../../Components/Header/Header';
 
 export default function Products() {
 
-    const URL = "http://localhost:8080/icecream/allice";
+    const URL = `${process.env.REACT_APP_BASE_URL}/icecream/allice`;
     const location = useLocation();
     const [product, setProduct] = useState([]);
     const [filterData, setFilterData] = useState([]);
